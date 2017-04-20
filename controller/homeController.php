@@ -8,6 +8,4 @@ class HomeController {
         $model = new HomeViewModel();
         $view->render($model);
     }
-
-    
 }
