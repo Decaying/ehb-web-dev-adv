@@ -1,16 +1,24 @@
 <?php
 require_once(VIEW_PATH . "/searchResults.php");
 require_once(MODEL_PATH . "/searchResultsViewModel.php");
+require_once(MODEL_PATH . "/customBikeViewModel.php");
+require_once(SERVICE_PATH . "/customBikeRepository.php");
 
 class SearchResultsController {
-    public function index() {
+    private $customBikes;
+
+    function __construct() {
+        $this->customBikes = new CustomBikeRepository();
+    }
+
+    public function index($query) {
         $view = new SearchResults();
-        $model = new SearchResultsViewModel($this->getQuery());
+        $model = new SearchResultsViewModel($query, $this->getSearchResults($query));
         $view->render($model);
     }
 
-    function getQuery() {
-        if (isset($_GET["q"]))
-            return $_GET["q"];
+    private function getSearchResults($query) {
+        $bikes = $this->customBikes->search($query);
+        return CustomBikeViewModel::FromCustomBikes($bikes);
     }
 }

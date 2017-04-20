@@ -1,10 +1,19 @@
 RewriteEngine on
+
+# rewrites /foo/bar/123 to ?p=foo&a=bar&id=123
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond $1 !^(index\.php|css|images|javascript|robots\.txt|favicon\.ico)
+RewriteRule ^([^/]+)/([^/]+)/(\d+) /?p=$1&a=$2&id=$3 [QSA]
+
+# rewrites /foo/bar to ?p=foo&a=bar
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond $1 !^(index\.php|css|images|javascript|robots\.txt|favicon\.ico)
+RewriteRule ^([^/]+)/([^/]+) /?p=$1&a=$2 [QSA]
+
+# rewrites /foo to ?p=foo
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond $1 !^(index\.php|css|images|javascript|robots\.txt|favicon\.ico)
 RewriteRule ^([^/]+) /?p=$1 [QSA]
-
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond $1 !^(index\.php|css|images|javascript|robots\.txt|favicon\.ico)
-RewriteRule ^([^/]+)([^/]+) /?p=$1&a=$2 [L,QSA]

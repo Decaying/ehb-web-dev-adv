@@ -20,6 +20,9 @@ defined("VIEW_PATH")
 defined("MODEL_PATH")
     or define("MODEL_PATH", ROOT_PATH.'/model');
 
+defined("SERVICE_PATH")
+or define("SERVICE_PATH", ROOT_PATH.'/service');
+
 ini_set("error_reporting", "true");
 error_reporting(E_ALL|E_STRICT);
 ?>
