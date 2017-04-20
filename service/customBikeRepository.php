@@ -1,5 +1,6 @@
 <?php
 require_once("customBike.php");
+require_once("purchase.php");
 
 class CustomBikeRepository {
     const NumberOfHighlights = 4;

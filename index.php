@@ -1,5 +1,6 @@
 <?php
 require_once("res/config.php");
+
 $page = isset($_GET['p']) && !empty($_GET['p']) ? $_GET['p'] : "home";
 $action = isset($_GET['a']) && !empty($_GET['a']) ? $_GET['a'] : "index";
 
@@ -22,7 +23,11 @@ if ($page === "search") {
 
     require_once("controller/apiController.php");
     $controller = new ApiController();
-    $controller->$action($param);
+    if (isset($param)){
+        $controller->$action($param);
+    } else {
+        $controller->$action();
+    }
     die();
 } else {
     header('X-PHP-Response-Code: 404', true, 404);

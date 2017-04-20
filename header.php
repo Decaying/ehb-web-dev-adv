@@ -38,6 +38,12 @@
                     -->
                 </ul>
                 <form class="navbar-form navbar-right" role="search" action="/search" method="get">
+                    <button class="btn btn-success" id="shopping-cart" style="display: none;">
+                        <span class="glyphicon glyphicon-shopping-cart">
+                            <span class="sr-only"># Items</span>
+                        </span>
+                        <span id="shopping-cart-counter"></span>
+                    </button>
                     <div class="form-group">
                         <input type="text" class="form-control" name="q" id="searchInput" placeholder="What are you looking for?">
                         <button type="submit" class="btn btn-default" id="searchButton">Search</button>
