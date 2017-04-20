@@ -1,0 +1,10 @@
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond $1 !^(index\.php|css|images|javascript|robots\.txt|favicon\.ico)
+RewriteRule ^([^/]+) /?p=$1 [QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond $1 !^(index\.php|css|images|javascript|robots\.txt|favicon\.ico)
+RewriteRule ^([^/]+)([^/]+) /?p=$1&a=$2 [L,QSA]
