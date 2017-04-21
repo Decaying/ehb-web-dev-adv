@@ -1,12 +1,12 @@
 $(function() {
     //Search button
-    $("#searchButton").prop("disabled",true);
+    //$("#searchButton").prop("disabled",true);
 
-    $("#searchInput").keypress(function () {
-        if ($(this).val()) {
-            $("#searchButton").prop("disabled",false);
+    $("#searchInput").on("keyup", function () {
+        if ($(this).val().length == 0) {
+            $("#searchButton").prop("disabled", "disabled");
         } else {
-            $("#searchButton").prop("disabled",true);
+            $("#searchButton").prop("disabled", false);
         }
     });
 
@@ -23,11 +23,12 @@ $(function() {
     $(".shop-item").click(function() {
         $.ajax("/api/buy/" + $(this).data("id"))
             .done(function(data) {
-                var json = $.parseJSON(data);
+                var bike = $.parseJSON(data);
+                toastSuccess("Successfully added " + bike.name + " to the shopping cart!");
                 //show that the user bought a certain item (toast?)
                 updateShoppingCart();
             }).fail(function() {
-                console.log("Failed to buy an item!");
+                toastError("Failed to buy an item!");
             });
     });
 
@@ -40,14 +41,37 @@ $(function() {
                 } else {
                     $("#shopping-cart").hide();
                 }
-            })
-
+            });
     }
 
     //update the shopping cart button on load
     updateShoppingCart();
 
-    $("#shopping-cart").click(function (e) {
+    /*$("#shopping-cart").click(function (e) {
         e.preventDefault();
+    });*/
+
+    //toast bar on top
+    function toastError(text) {
+        console.error(text);
+        $("#toast-panel").removeClass("panel-success");
+        $("#toast-panel").addClass("panel-error");
+        toast(text);
+    }
+
+    function toastSuccess(text) {
+        console.log(text);
+        $("#toast-panel").addClass("panel-success");
+        $("#toast-panel").removeClass("panel-error");
+        toast(text);
+    }
+
+    function toast(text) {
+        $("#toast-text").text(text);
+        $("#toast-panel").show().delay(5000).fadeOut();
+    }
+
+    $("#toast-panel #close-toast").click(function() {
+        $("#toast-panel").hide();
     });
 });

@@ -31,24 +31,28 @@
                 <a class="navbar-brand" href="/">Custom Bikes</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <!--
-                    <li class="active"><a href="#">About <span class="sr-only">(current)</span></a></li>
-                    <li><a href="/about">About</a></li>
-                    -->
-                </ul>
-                <form class="navbar-form navbar-right" role="search" action="/search" method="get">
-                    <button class="btn btn-success" id="shopping-cart" style="display: none;">
-                        <span class="glyphicon glyphicon-shopping-cart">
-                            <span class="sr-only"># Items</span>
-                        </span>
-                        <span id="shopping-cart-counter"></span>
-                    </button>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="q" id="searchInput" placeholder="What are you looking for?">
-                        <button type="submit" class="btn btn-default" id="searchButton">Search</button>
-                    </div>
-                </form>
+                <div class="navbar-right">
+                    <form class="navbar-form" role="search" action="/search" method="get">
+                        <a href="#" class="btn btn-success" id="shopping-cart" style="display: none;">
+                            <span class="glyphicon glyphicon-shopping-cart">
+                                <span class="sr-only"># Items</span>
+                            </span>
+                            <span id="shopping-cart-counter"></span>
+                        </a>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="q" id="searchInput" placeholder="What are you looking for?">
+                            <button type="submit" class="btn btn-default" disabled="disabled" id="searchButton">Search</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </nav>
+    <div class="container">
+        <div class="panel panel-success" id="toast-panel" style="display: none;">
+            <div class="panel-heading" id="toast-content">
+                <span id="toast-text"></span>
+                <span class="glyphicon glyphicon-remove pull-right" id="close-toast"></span>
+            </div>
+        </div>
+    </div>
