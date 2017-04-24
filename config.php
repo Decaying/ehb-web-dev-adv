@@ -12,7 +12,10 @@
     );
 
 defined("ROOT_PATH")
-or define("ROOT_PATH", getenv("DOCUMENT_ROOT"));
+    or define("ROOT_PATH", dirname(__FILE__));
+
+defined("SITE_ROOT")
+    or define("SITE_ROOT", ""); //or define("SITE_ROOT", "/~hans.buys");  //voor EhB hosting
 
 defined("VIEW_PATH")
     or define("VIEW_PATH", ROOT_PATH.'/view');

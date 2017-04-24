@@ -1,4 +1,6 @@
 $(function() {
+    SITE_ROOT = ""; // SITE_ROOT = "/~hans.buys"; voor EhB hosting
+
     //Search button
     //$("#searchButton").prop("disabled",true);
 
@@ -21,7 +23,7 @@ $(function() {
     );
 
     $(".shop-item").click(function() {
-        $.ajax("/api/buy/" + $(this).data("id"))
+        $.ajax(SITE_ROOT + "/api/buy/" + $(this).data("id"))
             .done(function(data) {
                 var bike = $.parseJSON(data);
                 toastSuccess("Successfully added " + bike.name + " to the shopping cart!");
@@ -33,7 +35,7 @@ $(function() {
     });
 
     function updateShoppingCart() {
-        $.ajax("/api/count")
+        $.ajax(SITE_ROOT + "/api/count")
             .done(function(data) {
                 if (!isNaN(data) && data > 0){
                     $("#shopping-cart-counter").text(data);

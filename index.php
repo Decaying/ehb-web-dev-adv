@@ -1,5 +1,5 @@
 <?php
-require_once("res/config.php");
+require_once("config.php");
 
 $page = isset($_GET['p']) && !empty($_GET['p']) ? $_GET['p'] : "home";
 $action = isset($_GET['a']) && !empty($_GET['a']) ? $_GET['a'] : "index";

@@ -28,11 +28,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Custom Bikes</a>
+                <a class="navbar-brand" href="<?php echo SITE_ROOT; ?>/">Custom Bikes</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <div class="navbar-right">
-                    <form class="navbar-form" role="search" action="/search" method="get">
+                    <form class="navbar-form" role="search" action="<?php echo SITE_ROOT; ?>/search" method="get">
                         <a href="#" class="btn btn-success" id="shopping-cart" style="display: none;">
                             <span class="glyphicon glyphicon-shopping-cart">
                                 <span class="sr-only"># Items</span>
