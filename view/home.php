@@ -8,6 +8,9 @@ class Home {
 
         echo '<h1>These ones have been specially picked for you.</h1>';
         Bike::renderBikes($model->highlights);
+
+        echo '<h1>Here is a selection of the latest models.</h1>';
+        Bike::renderBikes($model->latest);
     }
 
     function renderBike(CustomBikeViewModel $model) {

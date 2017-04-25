@@ -13,14 +13,20 @@ class HomeController {
 
     public function index() {
         $highlights = $this->getHighlights();
+        $latest = $this->getLatest();
 
         $view = new Home();
-        $model = new HomeViewModel($highlights);
+        $model = new HomeViewModel($highlights, $latest);
         $view->render($model);
     }
 
     public function getHighlights() {
         $allBikes = $this->customBikes->getHighlightedBikes();
+        return CustomBikeViewModel::FromCustomBikes($allBikes);
+    }
+
+    public function getLatest() {
+        $allBikes = $this->customBikes->getLatestBikes();
         return CustomBikeViewModel::FromCustomBikes($allBikes);
     }
 }

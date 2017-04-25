@@ -1,36 +1,6 @@
 $(function() {
     SITE_ROOT = "/~hans.buys";
 
-    //this algorithm is the same logic as in rewrite.php, keep this aligned.
-    function rewrite_url(url) {
-        if (REWRITE_MODULE_ON === true)
-            return SITE_ROOT + url;
-        else {
-            var regex = /([^/]+)/g;
-
-            var matches = [];
-            var output = SITE_ROOT;
-            var count = 0;
-
-            while (matches = regex.exec(url)) {
-                switch (count) {
-                    case 0:
-                        output += "/?p=" + matches[1];
-                        break;
-                    case 1:
-                        output += "&a=" + matches[1];
-                        break;
-                    case 2:
-                        output += "&id=" + matches[1];
-                        break;
-                }
-                count++;
-            }
-
-            return output;
-        }
-    }
-
     //Search button
     //$("#searchButton").prop("disabled",true);
 
@@ -52,20 +22,34 @@ $(function() {
         }
     );
 
-    $(".shop-item").click(function() {
-        $.ajax(rewrite_url("/api/buy/" + $(this).data("id")))
-            .done(function(data) {
-                var bike = $.parseJSON(data);
-                toastSuccess("Successfully added " + bike.name + " to the shopping cart!");
-                //show that the user bought a certain item (toast?)
-                updateShoppingCart();
-            }).fail(function() {
+    function debounce(delay, func) {
+        var timeout;
+        return function() {
+            var context = this,
+                args = arguments;
+
+            clearTimeout(timeout);
+
+            timeout = setTimeout(function() {
+                func.apply(context, args);
+            }, delay);
+        }
+    }
+
+    $(".shop-item").click(debounce(250, function() {
+            $.ajax(SITE_ROOT + "/api/buy/" + $(this).data("id"))
+                .done(function(data) {
+                    var bike = $.parseJSON(data);
+                    toastSuccess("Successfully added " + bike.name + " to the shopping cart!");
+                    //show that the user bought a certain item (toast?)
+                    updateShoppingCart();
+                }).fail(function() {
                 toastError("Failed to buy an item!");
             });
-    });
+        }));
 
     function updateShoppingCart() {
-        $.ajax(rewrite_url("/api/count"))
+        $.ajax(SITE_ROOT + "/api/count")
             .done(function(data) {
                 if (!isNaN(data) && data > 0){
                     $("#shopping-cart-counter").text(data);

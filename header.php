@@ -16,11 +16,6 @@
     <![endif]-->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-    <?php
-        include "rewrite.php";
-    ?>
-
     <script src="js/index.js" lang="javascript"></script>
 </head>
 <body>
@@ -33,11 +28,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo rewrite_url(SITE_ROOT, "/"); ?>">Custom Bikes</a>
+                <a class="navbar-brand" href="<?php echo SITE_ROOT . "/"; ?>">Custom Bikes</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <div class="navbar-right">
-                    <form class="navbar-form" role="search" action="<?php echo rewrite_url(SITE_ROOT, "/search"); ?>" method="get">
+                    <form class="navbar-form" role="search" action="<?php echo SITE_ROOT . "/search"; ?>" method="get">
                         <a href="#" class="btn btn-success" id="shopping-cart" style="display: none;">
                             <span class="glyphicon glyphicon-shopping-cart">
                                 <span class="sr-only"># Items</span>
