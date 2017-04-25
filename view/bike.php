@@ -23,20 +23,24 @@ class Bike {
     }
 
     public function renderBikeAsThumbnail() {
-        echo '<div class="col-lg-3 col-md-6 col-sm-12">
-                  <div class="panel panel-default shop-item-toggle">
-                      <div class="panel-heading">
-                          ' . $this->bike->name . '
-                      </div>
-                      <div class="panel-body" style="position: relative">
-                          <a href="#" data-id="' . $this->bike->id . '" class="btn btn-success btn-square btn-bottom-right shop-item">
-                              <span class="glyphicon glyphicon-shopping-cart">
-                                  <span class="sr-only">Add to shopping cart</span>
-                              </span>
-                          </a>
-                          <img src="' . $this->bike->image . '" class="img-responsive img-thumbnail">
-                      </div>
-                  </div>
-              </div>';
+        echo '<div class="col-lg-3 col-md-6 col-sm-12">';
+        $this->renderBike();
+        echo '</div>';
+    }
+
+    public function renderBike() {
+        echo '<div class="panel panel-default shop-item-toggle">
+              <div class="panel-heading">
+              ' . $this->bike->name . '
+              </div>
+              <div class="panel-body" style="position: relative">
+                  <a href="#" data-id="' . $this->bike->id . '" class="btn btn-success btn-square btn-bottom-right shop-item">
+                      <span class="glyphicon glyphicon-shopping-cart">
+                          <span class="sr-only">Add to shopping cart</span>
+                      </span>
+                  </a>
+                  <img src="' . $this->bike->image . '" class="img-responsive img-thumbnail">
+              </div>
+          </div>';
     }
 }

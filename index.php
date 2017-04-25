@@ -13,10 +13,13 @@ if ($page === "search") {
 } else if ($page === "home") {
     require_once("controller/homeController.php");
     $controller = new HomeController();
+} else if ($page === "bikes") {
+    require_once("controller/bikesController.php");
+    $controller = new BikesController();
 } else if ($page === "api") {
     register_shutdown_function(function() use($action, $page){
         if (error_get_last() !== NULL) {
-            header('X-PHP-Response-Code: 500', true, 500);
+            header('X-PHP-Response-Code: 404', true, 404);
             throw new Exception("action '" . $action . "'' not mapped to controller '" . $page . "'.");
         }
     });

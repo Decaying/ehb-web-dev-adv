@@ -64,4 +64,8 @@ class CustomBikeRepository {
         });
         return reset($bikes);
     }
+
+    public function getAllBikes() {
+        return $this->allBikes;
+    }
 }

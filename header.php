@@ -31,6 +31,9 @@
                 <a class="navbar-brand" href="<?php echo SITE_ROOT . "/"; ?>">Custom Bikes</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="<?php echo SITE_ROOT . "/bikes"; ?>">Overview</a></li>
+                </ul>
                 <div class="navbar-right">
                     <form class="navbar-form" role="search" action="<?php echo SITE_ROOT . "/search"; ?>" method="get">
                         <a href="#" class="btn btn-success" id="shopping-cart" style="display: none;">
