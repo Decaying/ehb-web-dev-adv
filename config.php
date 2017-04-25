@@ -15,7 +15,7 @@ defined("ROOT_PATH")
     or define("ROOT_PATH", dirname(__FILE__));
 
 defined("SITE_ROOT")
-    or define("SITE_ROOT", ""); //or define("SITE_ROOT", "/~hans.buys");  //voor EhB hosting
+    or define("SITE_ROOT", "/~hans.buys");  // "/~hans.buys" voor EhB hosting, "" voor localhost
 
 defined("VIEW_PATH")
     or define("VIEW_PATH", ROOT_PATH.'/view');
