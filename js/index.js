@@ -36,7 +36,7 @@ $(function() {
         }
     }
 
-    $(".shop-item").click(debounce(250, function() {
+    $(".shop-item-button").click(debounce(250, function() {
             $.ajax(SITE_ROOT + "/api/buy/" + $(this).data("id"))
                 .done(function(data) {
                     var bike = $.parseJSON(data);

@@ -34,7 +34,7 @@ class Bike {
               <a class="bike-name" href="' . SITE_ROOT . '/bikes/' . $this->bike->id . '">' . $this->bike->name . '</a>
               </div>
               <div class="panel-body" style="position: relative">
-                  <a href="#" data-id="' . $this->bike->id . '" class="btn btn-success btn-square btn-bottom-right shop-item">
+                  <a href="#" data-id="' . $this->bike->id . '" class="btn btn-success btn-square btn-bottom-right shop-item shop-item-button">
                       <span class="glyphicon glyphicon-shopping-cart">
                           <span class="sr-only">Add to shopping cart</span>
                       </span>
