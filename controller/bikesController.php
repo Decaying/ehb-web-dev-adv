@@ -13,6 +13,7 @@ require_once(MODEL_PATH . "/bikes/detailViewModel.php");
 require_once(SERVICE_PATH . "/customBikeRepository.php");
 
 class BikesController {
+    const NumberOfBikesFromSameCategory = 4;
     private $customBikes;
 
     function __construct() {
@@ -38,19 +39,37 @@ class BikesController {
 
     private function indexById($id) {
         $bike = $this->getById($id);
+        $sameCategory = $this->getSameCategory($bike);
 
         $view = new Detail();
-        $model = new DetailViewModel($bike);
+        $model = new DetailViewModel($this->toBikeVm($bike), $this->toBikeVms($sameCategory));
         $view->render($model);
     }
 
-    private function getById($id) {
-        $bike = $this->customBikes->getById($id);
+    private function toBikeVm(CustomBike $bike) {
         return CustomBikeViewModel::FromCustomBike($bike);
+    }
+
+    private function toBikeVms(array $bikes) {
+        return CustomBikeViewModel::FromCustomBikes($bikes);
+    }
+
+    private function getById($id) {
+        return $this->customBikes->getById($id);
     }
 
     private function getAll() {
         $allBikes = $this->customBikes->getAllBikes();
         return CustomBikeViewModel::FromCustomBikes($allBikes);
+    }
+
+    private function getSameCategory(CustomBike $bike) {
+        $sameCategory = $this->customBikes->searchByCategory($bike->category);
+
+        $sameCategoryNotSelf = array_filter($sameCategory, function($b) use ($bike) {
+            return $b->id !== $bike->id;
+        });
+
+        return array_slice($sameCategoryNotSelf, 0, BikesController::NumberOfBikesFromSameCategory);
     }
 }

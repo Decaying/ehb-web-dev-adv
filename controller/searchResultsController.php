@@ -18,7 +18,7 @@ class SearchResultsController {
     }
 
     private function getSearchResults($query) {
-        $bikes = $this->customBikes->search($query);
+        $bikes = $this->customBikes->searchByName($query);
         return CustomBikeViewModel::FromCustomBikes($bikes);
     }
 }

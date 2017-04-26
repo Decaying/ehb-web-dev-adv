@@ -3,6 +3,8 @@
 namespace bikes;
 
 
+use Bike;
+
 class Detail {
 
     public function render(DetailViewModel $model) {
@@ -26,7 +28,11 @@ class Detail {
         <p><span class="glyphicon glyphicon-ok" style="color:green;"></span> Gratis levering</p>
         <p><span class="glyphicon glyphicon-ok" style="color:green;"></span> 30 dagen bedenktijd</p>
     </div>
-</div>
-';
+</div>';
+        if (count($model->sameCategory) > 0) {
+            echo '<h3>Here\'s a selection from the same category</h3>';
+
+            Bike::renderBikes($model->sameCategory);
+        }
     }
 }

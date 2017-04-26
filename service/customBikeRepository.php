@@ -11,7 +11,7 @@ class CustomBikeRepository {
     function __construct() {
         $this->allBikes = array(
             new CustomBike(1, "Captain America", "http://media.new.mensxp.com/media/content/2016/Feb/indian-custom-bike-builders-980x457-1454589702_980x457.jpg",
-                49999.99, "Street", "The Captain America's Description", new DateTime('2017-01-01')),
+                49999.99, "Racing", "The Captain America's Description", new DateTime('2017-01-01')),
             new CustomBike(2, "Offroad Maniac", "http://kickstart.bikeexif.com/wp-content/uploads/2015/12/bmw-r100r-vagabund-625x417.jpg",
                 41234.567, "Sport", "This is the one you want when you want to go off-road", new DateTime('2016-12-31')),
             new CustomBike(3, "Tron Legacy Rebuilt", "https://s-media-cache-ak0.pinimg.com/736x/88/85/bd/8885bd20d991291d1337b832ee890c0f.jpg",
@@ -40,7 +40,7 @@ class CustomBikeRepository {
             return $a->dateAdded > $b->dateAdded ? -1 : 1;
         });
 
-        return array_slice($sorted, 0, CustomBikeRepository::NumberOfLatest);;
+        return array_slice($sorted, 0, CustomBikeRepository::NumberOfLatest);
     }
 
     public function getHighlightedBikes() {
@@ -52,9 +52,15 @@ class CustomBikeRepository {
         return $bikes;
     }
 
-    public function search($name) {
+    public function searchByName($name) {
         return array_filter($this->allBikes, function($bike) use ($name) {
             return stripos($bike->name, $name) !== false;
+        });
+    }
+
+    public function searchByCategory($category) {
+        return array_filter($this->allBikes, function($bike) use ($category) {
+            return $bike->category === $category;
         });
     }
 
