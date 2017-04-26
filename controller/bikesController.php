@@ -5,6 +5,8 @@ use bikes\DetailViewModel;
 use bikes\Index;
 use bikes\IndexViewModel;
 
+require_once("controller.php");
+
 require_once(VIEW_PATH . "/bikes/detail.php");
 require_once(VIEW_PATH . "/bikes/index.php");
 require_once(MODEL_PATH . "/customBikeViewModel.php");
@@ -12,7 +14,7 @@ require_once(MODEL_PATH . "/bikes/indexViewModel.php");
 require_once(MODEL_PATH . "/bikes/detailViewModel.php");
 require_once(SERVICE_PATH . "/customBikeRepository.php");
 
-class BikesController {
+class BikesController implements Controller {
     const NumberOfBikesFromSameCategory = 4;
 
     private $customBikes;
@@ -24,27 +26,27 @@ class BikesController {
     public function index() {
         $args = func_get_args();
         if (count($args) == 1){
-            $this->indexById($args[0]);
+            return $this->indexById($args[0]);
         } else {
-            $this->indexForAll();
+            return $this->indexForAll();
         }
     }
 
     private function indexForAll() {
         $all = $this->getAll();
 
-        $view = new Index();
         $model = new IndexViewModel($all);
-        $view->render($model);
+
+        return new Index($model);
     }
 
     private function indexById($id) {
         $bike = $this->getById($id);
         $sameCategory = $this->getSameCategory($bike);
 
-        $view = new Detail();
         $model = new DetailViewModel($this->toBikeVm($bike), $this->toBikeVms($sameCategory));
-        $view->render($model);
+
+        return new Detail($model);
     }
 
     private function toBikeVm(CustomBike $bike) {

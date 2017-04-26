@@ -1,10 +1,13 @@
 <?php
+
+require_once("controller.php");
+
 require_once(VIEW_PATH . "/home.php");
 require_once(MODEL_PATH . "/homeViewModel.php");
 require_once(MODEL_PATH . "/customBikeViewModel.php");
 require_once(SERVICE_PATH . "/customBikeRepository.php");
 
-class HomeController {
+class HomeController implements Controller {
     private $customBikes;
 
     function __construct(CustomBikeRepository $repo) {
@@ -15,9 +18,8 @@ class HomeController {
         $highlights = $this->getHighlights();
         $latest = $this->getLatest();
 
-        $view = new Home();
         $model = new HomeViewModel($highlights, $latest);
-        $view->render($model);
+        return new Home($model);
     }
 
     public function getHighlights() {

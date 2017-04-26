@@ -1,59 +1,66 @@
 <?php
 require_once("config.php");
 
-$page = isset($_GET['p']) && !empty($_GET['p']) ? $_GET['p'] : "home";
-$action = isset($_GET['a']) && !empty($_GET['a']) ? $_GET['a'] : "index";
+$controllerName = isset($_GET['p']) && !empty($_GET['p']) ? $_GET['p'] : "home";
+$viewName = isset($_GET['a']) && !empty($_GET['a']) ? $_GET['a'] : "index";
 
-if (isset($_GET['id']) && !empty($_GET['id'])) $param = $_GET['id'];
-if (isset($_GET["q"])) $param = $_GET["q"];
+$param = (isset($_GET['id']) && !empty($_GET['id'])) ? $_GET['id'] : null;
+$param = (isset($_GET["q"]) && !empty($_GET['q'])) ? $_GET["q"] : $param;
 
-require_once(SERVICE_PATH . "/inMemoryCustomBikeRepository.php");
-$customBikes = new InMemoryCustomBikeRepository();
+require_once("controller/controllerFactory.php");
+$controllerFactory = new ControllerFactory();
+$controller = $controllerFactory->getController($controllerName);
 
-require_once(SERVICE_PATH . "/sessionPurchaseRepository.php");
-$purchases = new SessionPurchaseRepository();
-
-if ($page === "search") {
-    require_once("controller/searchResultsController.php");
-    $controller = new SearchResultsController($customBikes);
-} else if ($page === "home") {
-    require_once("controller/homeController.php");
-    $controller = new HomeController($customBikes);
-} else if ($page === "bikes") {
-    require_once("controller/bikesController.php");
-    $controller = new BikesController($customBikes);
-} else if ($page === "api") {
-    register_shutdown_function(function() use($action, $page){
-        if (error_get_last() !== NULL) {
-            header('X-PHP-Response-Code: 404', true, 404);
-            throw new Exception("action '" . $action . "'' not mapped to controller '" . $page . "'.");
-        }
-    });
-
-    require_once("controller/apiController.php");
-    $controller = new ApiController($customBikes, $purchases);
-    if (isset($param)){
-        $controller->$action($param);
-    } else {
-        $controller->$action();
-    }
-    die(0);
-} else {
+if ($controller === null) {
     header('X-PHP-Response-Code: 404', true, 404);
-    throw new Exception("action '".$action."'' not mapped to controller '".$page."'.");
+    throw new Exception("Controller '".$controllerName."' does not exist.");
 }
 
-require_once("header.php");
-?>
+if (!method_exists($controller, $viewName)){
+    header('X-PHP-Response-Code: 404', true, 404);
+    throw new Exception("action '".$viewName."'' not mapped to controller '".$controllerName."'.");
+}
+
+if ($controller instanceof ApiController){
+    renderContent($controller, $viewName, $param);
+} else if ($controller instanceof Controller) {
+    require_once("header.php");
+
+    ?>
     <div class="container">
         <?php
-            if (isset($param)){
-                $controller->$action($param);
-            } else {
-                $controller->$action();
-            }
+        renderContent($controller, $viewName, $param);
         ?>
     </div>
-<?php
-require_once("footer.php");
-?>
+    <?php
+    require_once("footer.php");
+} else {
+    header('X-PHP-Response-Code: 500', true, 500);
+    throw new Exception("Controller '".$controllerName."' has not been implemented correctly.");
+}
+
+function renderContent($controller, $viewName, $param){
+    $view = callController($controller, $viewName, $param);
+
+    if (isset($view)) {
+        renderView($view);
+    } else {
+        header('X-PHP-Response-Code: 500', true, 500);
+        throw new Exception("Controller '" . get_class($controller) . "' with action '" . $viewName . "' has not been implemented correctly.");
+    }
+}
+
+function callController($controller, $viewName, $param) {
+    if ($param !== null){
+        return $controller->$viewName($param);
+    } else {
+        return $controller->$viewName();
+    }
+}
+
+function renderView($view) {
+    if ($view instanceof View)
+        echo $view->render();
+    else
+        echo $view;
+}
