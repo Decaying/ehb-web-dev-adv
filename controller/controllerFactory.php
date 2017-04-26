@@ -1,6 +1,11 @@
 <?php
 
 class ControllerFactory {
+    private $factory;
+
+    function __construct() {
+        $this->factory = new ServiceFactory();
+    }
 
     public function getController($controllerName) {
         $controller = null;
@@ -17,18 +22,23 @@ class ControllerFactory {
         } else if ($controllerName === "basket") {
             require_once("basketController.php");
             $controller = new BasketController($this->getBikeRepository(), $this->getPurchaseRepository());
+        }else if ($controllerName === "login") {
+            require_once("loginController.php");
+            $controller = new LoginController($this->getUserRepository());
         }
 
         return $controller;
     }
 
     private function getBikeRepository() {
-        require_once(SERVICE_PATH . "/inMemoryCustomBikeRepository.php");
-        return new InMemoryCustomBikeRepository();
+        return $this->factory->getCustomBikeRepository();
     }
 
     private function getPurchaseRepository() {
-        require_once(SERVICE_PATH . "/sessionPurchaseRepository.php");
-        return new SessionPurchaseRepository();
+        return $this->factory->getPurchaseRepository();
+    }
+
+    private function getUserRepository() {
+        return $this->factory->getUserRepository();
     }
 }

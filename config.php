@@ -4,10 +4,6 @@
             "host" => "",
             "user" => "",
             "pass" => "",
-        ),
-        "paths" => array(
-            "resources" => "/res",
-            "images" => "/img"
         )
     );
 

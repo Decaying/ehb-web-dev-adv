@@ -41,7 +41,6 @@ $(function() {
                 .done(function(data) {
                     var bike = $.parseJSON(data);
                     toastSuccess("Successfully added " + bike.name + " to the shopping cart!");
-                    //show that the user bought a certain item (toast?)
                     updateShoppingCart();
                 }).fail(function() {
                 toastError("Failed to buy an item!");

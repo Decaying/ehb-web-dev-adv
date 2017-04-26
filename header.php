@@ -1,3 +1,7 @@
+<?php
+    $userRepository = $serviceFactory->getUserRepository();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,6 +39,12 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="<?php echo SITE_ROOT . "/bikes"; ?>">Overview</a></li>
+                    <?php if ($userRepository->isUserLoggedIn()) {
+                        echo '<li><a href="' . SITE_ROOT . '/contact">Contact</a></li>';
+                    } else {
+                        echo '<li><a href="' . SITE_ROOT . '/login">Login</a></li>';
+                        echo '<li><a href="' . SITE_ROOT . '/login/register">Register</a></li>';
+                    } ?>
                 </ul>
                 <div class="navbar-right">
                     <form class="navbar-form" role="search" action="<?php echo SITE_ROOT . "/search"; ?>" method="get">

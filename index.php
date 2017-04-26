@@ -7,6 +7,10 @@ $viewName = isset($_GET['a']) && !empty($_GET['a']) ? $_GET['a'] : "index";
 $param = (isset($_GET['id']) && !empty($_GET['id'])) ? $_GET['id'] : null;
 $param = (isset($_GET["q"]) && !empty($_GET['q'])) ? $_GET["q"] : $param;
 
+
+require_once(SERVICE_PATH . "/serviceFactory.php");
+$serviceFactory = new ServiceFactory();
+
 require_once("controller/controllerFactory.php");
 $controllerFactory = new ControllerFactory();
 $controller = $controllerFactory->getController($controllerName);
