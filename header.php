@@ -7,8 +7,8 @@
 
     <title>Custom Bikes</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/index.css" rel="stylesheet">
+    <link href="<?php echo SITE_ROOT; ?>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo SITE_ROOT; ?>/css/index.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -16,7 +16,7 @@
     <![endif]-->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/index.js" lang="javascript"></script>
+    <script src="<?php echo SITE_ROOT; ?>/js/index.js" lang="javascript"></script>
 </head>
 <body>
     <nav class="container navbar navbar-default">

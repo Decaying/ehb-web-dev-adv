@@ -31,7 +31,7 @@ class Bike {
     public function renderBike() {
         echo '<div class="panel panel-default shop-item-toggle">
               <div class="panel-heading">
-              ' . $this->bike->name . '
+              <a href="' . SITE_ROOT . '/bikes/' . $this->bike->id . '">' . $this->bike->name . '</a>
               </div>
               <div class="panel-body" style="position: relative">
                   <a href="#" data-id="' . $this->bike->id . '" class="btn btn-success btn-square btn-bottom-right shop-item">
@@ -39,7 +39,7 @@ class Bike {
                           <span class="sr-only">Add to shopping cart</span>
                       </span>
                   </a>
-                  <img src="' . $this->bike->image . '" class="img-responsive img-thumbnail">
+                  <a href="' . SITE_ROOT . '/bikes/' . $this->bike->id . '"><img src="' . $this->bike->image . '" class="img-responsive img-thumbnail"></a>
               </div>
           </div>';
     }

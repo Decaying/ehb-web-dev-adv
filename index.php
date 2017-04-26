@@ -31,7 +31,7 @@ if ($page === "search") {
     } else {
         $controller->$action();
     }
-    die();
+    die(0);
 } else {
     header('X-PHP-Response-Code: 404', true, 404);
     throw new Exception("action '".$action."'' not mapped to controller '".$page."'.");

@@ -1,18 +1,24 @@
 RewriteEngine on
 
-# rewrites /foo/bar/123 to ?p=foo&a=bar&id=123
+# rewrites /foo/bar/123 to /~hans.buys/?p=foo&a=bar&id=123
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond $1 !^(index\.php|css|images|javascript|robots\.txt|favicon\.ico)
 RewriteRule ^([^/]+)/([^/]+)/(\d+) /~hans.buys/?p=$1&a=$2&id=$3 [QSA]
 
-# rewrites /foo/bar to ?p=foo&a=bar
+# rewrites /foo/123 to /~hans.buys/?p=foo&id=123
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond $1 !^(index\.php|css|images|javascript|robots\.txt|favicon\.ico)
+RewriteRule ^([^/]+)/(\d+) /~hans.buys/?p=$1&id=$2 [QSA]
+
+# rewrites /foo/bar to /~hans.buys/?p=foo&a=bar
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond $1 !^(index\.php|css|images|javascript|robots\.txt|favicon\.ico)
 RewriteRule ^([^/]+)/([^/]+) /~hans.buys/?p=$1&a=$2 [QSA]
 
-# rewrites /foo to ?p=foo
+# rewrites /foo to /~hans.buys/?p=foo
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond $1 !^(index\.php|css|images|javascript|robots\.txt|favicon\.ico)
