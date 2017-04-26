@@ -7,20 +7,25 @@ class Detail {
 
     public function render(DetailViewModel $model) {
         echo '
-<h1>This is the detail page for ' . $model->bike->name . ' </h1>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8">
-            ' . $model->bike->name . '
-        </div>
-        <div class="col-lg-4">
-            <a href="#" data-id="' . $model->bike->id . '" class="btn btn-success shop-item-button pull-right">
-                <span class="glyphicon glyphicon-shopping-cart"></span>
-                Add to cart
-            </a>
-        </div>
+        <h2>' . $model->bike->name . '</h2>
+        <p> Categorie: ' . $model->bike->category . '</p>
+        <p>' . $model->bike->description . '</p>
+<div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6">
+        
+        <p><img src="' . $model->bike->image . '" class="img-responsive img-thumbnail"></p>
+        
     </div>
-
+    <div class="col-sm-6 col-md-6 col-lg-6">
+        <p>Price : ' . $model->bike->price . '</p>
+        <p><a href="#" data-id="' . $model->bike->id . '" class="btn btn-success shop-item-button">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+            Add to cart
+        </a></p>
+        <p><span class="glyphicon glyphicon-ok" style="color:green;"></span> Gratis afhaling</p>
+        <p><span class="glyphicon glyphicon-ok" style="color:green;"></span> Gratis levering</p>
+        <p><span class="glyphicon glyphicon-ok" style="color:green;"></span> 30 dagen bedenktijd</p>
+    </div>
 </div>
 ';
     }
