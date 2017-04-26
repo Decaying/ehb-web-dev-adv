@@ -5,7 +5,7 @@ $(function() {
     //$("#searchButton").prop("disabled",true);
 
     $("#searchInput").on("keyup", function () {
-        if ($(this).val().length == 0) {
+        if ($(this).val().length === 0) {
             $("#searchButton").prop("disabled", "disabled");
         } else {
             $("#searchButton").prop("disabled", false);
@@ -87,7 +87,19 @@ $(function() {
         $("#toast-panel").show().delay(5000).fadeOut();
     }
 
-    $("#toast-panel #close-toast").click(function() {
+    $("#toast-panel").find("#close-toast").click(function() {
         $("#toast-panel").hide();
     });
+
+    //live filtering
+    $("#filter-bikes").keyup(debounce(100, function() {
+        var filter = $(this).val();
+        $(".bike-thumbnail").each(function() {
+            if (!filter.empty && $(this).find(".bike-name").text().search(new RegExp(filter, "i")) < 0) {
+                $(this).fadeOut();
+            } else {
+                $(this).show();
+            }
+        });
+    }));
 });

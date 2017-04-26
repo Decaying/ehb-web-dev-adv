@@ -23,7 +23,7 @@ class Bike {
     }
 
     public function renderBikeAsThumbnail() {
-        echo '<div class="col-lg-3 col-md-6 col-sm-12">';
+        echo '<div class="col-lg-3 col-md-6 col-sm-12 bike-thumbnail">';
         $this->renderBike();
         echo '</div>';
     }
@@ -31,7 +31,7 @@ class Bike {
     public function renderBike() {
         echo '<div class="panel panel-default shop-item-toggle">
               <div class="panel-heading">
-              <a href="' . SITE_ROOT . '/bikes/' . $this->bike->id . '">' . $this->bike->name . '</a>
+              <a class="bike-name" href="' . SITE_ROOT . '/bikes/' . $this->bike->id . '">' . $this->bike->name . '</a>
               </div>
               <div class="panel-body" style="position: relative">
                   <a href="#" data-id="' . $this->bike->id . '" class="btn btn-success btn-square btn-bottom-right shop-item">
