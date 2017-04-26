@@ -12,7 +12,7 @@ require_once(SERVICE_PATH . "/serviceFactory.php");
 $serviceFactory = new ServiceFactory();
 
 require_once("controller/controllerFactory.php");
-$controllerFactory = new ControllerFactory();
+$controllerFactory = new ControllerFactory($serviceFactory);
 $controller = $controllerFactory->getController($controllerName);
 
 if ($controller === null) {

@@ -1,10 +1,12 @@
 <?php
 
+require_once(SERVICE_PATH . "/serviceFactory.php");
+
 class ControllerFactory {
     private $factory;
 
-    function __construct() {
-        $this->factory = new ServiceFactory();
+    function __construct(ServiceFactory $serviceFactory) {
+        $this->factory = $serviceFactory;
     }
 
     public function getController($controllerName) {
