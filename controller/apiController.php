@@ -1,13 +1,15 @@
 <?php
-require_once(SERVICE_PATH . "/inMemoryCustomBikeRepository.php");
+require_once(SERVICE_PATH . "/customBikeRepository.php");
+require_once(SERVICE_PATH . "/purchaseRepository.php");
 
 class ApiController {
-    const SessionKeyCart = "cart";
 
     private $customBikes;
+    private $purchases;
 
-    function __construct(CustomBikeRepository $repo) {
-        $this->customBikes = $repo;
+    function __construct(CustomBikeRepository $bikes, PurchaseRepository $purchases) {
+        $this->customBikes = $bikes;
+        $this->purchases = $purchases;
     }
 
     public function buy($id) {
@@ -23,25 +25,11 @@ class ApiController {
     }
 
     public function count(){
-        $this->initializeSession();
-        echo count($_SESSION[ApiController::SessionKeyCart]);
+        echo $this->purchases->getNumberOfItemsInCart();
     }
 
     private function addToCart(CustomBike $bike) {
-        $this->initializeSession();
+        $this->purchases->addToCart($bike);
 
-        if(array_key_exists($bike->id, $_SESSION[ApiController::SessionKeyCart])){
-            $purch = $_SESSION[ApiController::SessionKeyCart][$bike->id];
-            $purch->addOneToAmount();
-        } else {
-            $_SESSION[ApiController::SessionKeyCart][$bike->id] = new Purchase($bike->id);
-        }
-    }
-
-    private function initializeSession() {
-        session_start();
-        if (!isset($_SESSION[ApiController::SessionKeyCart])) {
-            $_SESSION[ApiController::SessionKeyCart] = array();
-        }
     }
 }

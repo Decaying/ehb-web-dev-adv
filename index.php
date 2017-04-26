@@ -10,6 +10,9 @@ if (isset($_GET["q"])) $param = $_GET["q"];
 require_once(SERVICE_PATH . "/inMemoryCustomBikeRepository.php");
 $customBikes = new InMemoryCustomBikeRepository();
 
+require_once(SERVICE_PATH . "/sessionPurchaseRepository.php");
+$purchases = new SessionPurchaseRepository();
+
 if ($page === "search") {
     require_once("controller/searchResultsController.php");
     $controller = new SearchResultsController($customBikes);
@@ -28,7 +31,7 @@ if ($page === "search") {
     });
 
     require_once("controller/apiController.php");
-    $controller = new ApiController($customBikes);
+    $controller = new ApiController($customBikes, $purchases);
     if (isset($param)){
         $controller->$action($param);
     } else {
