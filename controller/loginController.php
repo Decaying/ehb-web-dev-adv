@@ -1,8 +1,8 @@
 <?php
 
-require_once ("controller.php");
+require_once("controller.php");
 
-require_once (SERVICE_PATH . "/userRepository.php");
+require_once(SERVICE_PATH . "/userRepository.php");
 require_once(VIEW_PATH . "/login/index.php");
 require_once(VIEW_PATH . "/login/register.php");
 
@@ -17,9 +17,14 @@ class LoginController implements Controller {
         if ($this->users->isUserLoggedIn()) {
             $this->redirectToHome();
         } else {
-            return new Index();
+            if (isset($_POST["user"]) && !empty($_POST["user"])) {
+                $this->redirectToHome();
+            } else {
+                return new Index();
+            }
         }
     }
+
     public function register() {
         if ($this->users->isUserLoggedIn()) {
             $this->redirectToHome();
@@ -27,6 +32,7 @@ class LoginController implements Controller {
             return new Register();
         }
     }
+
     private function redirectToHome() {
         header('Location: ' . SITE_ROOT . '/');
         die(0);
