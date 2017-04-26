@@ -18,9 +18,15 @@ class Index implements View {
     function render() {
         echo '
 <h1>Displaying an overview of all available bikes.</h1>
-<div class="container">
-    <input type="text" id="filter-bikes" placeholder="Which shall I display?"/>
-</div>
+    <select class="form-control" id="filter-bikes" style="margin-bottom: 10px;">
+       <option value="">Select Category</option>';
+
+        foreach ($this->model->categories as $key => $category) {
+            echo '<option value="' . $key . '">' . $category . '</option>';
+        }
+
+        echo '
+</select>
 ';
         Bike::renderBikes($this->model->allBikes);
     }

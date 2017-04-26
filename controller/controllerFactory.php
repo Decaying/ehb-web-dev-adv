@@ -14,9 +14,9 @@ class ControllerFactory {
         } else if ($controllerName === "bikes") {
             require_once("bikesController.php");
             $controller = new BikesController($this->getBikeRepository());
-        } else if ($controllerName === "api") {
-            require_once("purchaseController.php");
-            $controller = new PurchaseController($this->getBikeRepository(), $this->getPurchaseRepository());
+        } else if ($controllerName === "basket") {
+            require_once("basketController.php");
+            $controller = new BasketController($this->getBikeRepository(), $this->getPurchaseRepository());
         }
 
         return $controller;
@@ -31,5 +31,4 @@ class ControllerFactory {
         require_once(SERVICE_PATH . "/sessionPurchaseRepository.php");
         return new SessionPurchaseRepository();
     }
-
 }

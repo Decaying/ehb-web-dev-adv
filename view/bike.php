@@ -8,7 +8,6 @@ class Bike {
     }
 
     public static function renderBikes(array $bikes) {
-        echo '<div class="container-fluid">';
         foreach ($bikes as $key => $bike) {
             if ($key % 4 === 0) {
                 if ($key !== 0)
@@ -18,8 +17,7 @@ class Bike {
             $b = new Bike($bike);
             $b->renderBikeAsThumbnail();
         }
-        echo '</div>
-              </div>';
+        echo '</div>';
     }
 
     public function renderBikeAsThumbnail() {
@@ -31,7 +29,7 @@ class Bike {
     public function renderBike() {
         echo '<div class="panel panel-default shop-item-toggle">
               <div class="panel-heading">
-              <a class="bike-name" href="' . SITE_ROOT . '/bikes/' . $this->bike->id . '">' . $this->bike->name . '</a>
+              <span class="bike-category">' . $this->bike->category . '</span>: <a class="bike-name" href="' . SITE_ROOT . '/bikes/' . $this->bike->id . '">' . $this->bike->name . '</a>
               </div>
               <div class="panel-body" style="position: relative">
                   <a href="#" data-id="' . $this->bike->id . '" class="btn btn-success btn-square btn-bottom-right shop-item shop-item-button">

@@ -11,13 +11,13 @@ class Home implements View {
     }
 
     function render() {
-        echo '<p>This is the home page for the Custom Bikes webshop.</p>';
+        echo '<div class="jumbotron"><h1>Custom Bikes webshop</h1></div>';
 
 
-        echo '<h1>These ones have been specially picked for you.</h1>';
+        echo '<h3>These ones have been specially picked for you.</h3>';
         Bike::renderBikes($this->model->highlights);
 
-        echo '<h1>Here is a selection of the latest models.</h1>';
+        echo '<h3>Here is a selection of the latest models.</h3>';
         Bike::renderBikes($this->model->latest);
     }
 }

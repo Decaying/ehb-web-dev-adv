@@ -2,10 +2,12 @@
 
 require_once("apiController.php");
 
+require_once(VIEW_PATH . "/notFound.php");
+
 require_once(SERVICE_PATH . "/customBikeRepository.php");
 require_once(SERVICE_PATH . "/purchaseRepository.php");
 
-class PurchaseController implements ApiController {
+class BasketController implements ApiController {
 
     private $customBikes;
     private $purchases;
@@ -17,14 +19,14 @@ class PurchaseController implements ApiController {
 
     public function buy($id) {
         $bike = $this->customBikes->searchById($id);
-        if ($bike !== false) {
-            $this->addToCart($bike);
 
-            return json_encode($bike);
-        } else {
-            header('X-PHP-Response-Code: 404', true, 404);
-            throw new Exception("Custom bike with id " . $bike->id . " not found.");
+        if (!$bike) {
+            return new NotFound("Bike with id " . $id . " does not exist.");
         }
+
+        $this->addToCart($bike);
+
+        return json_encode($bike);
     }
 
     public function count(){

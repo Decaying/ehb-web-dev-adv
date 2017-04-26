@@ -37,7 +37,7 @@ $(function() {
     }
 
     $(".shop-item-button").click(debounce(250, function() {
-            $.ajax(SITE_ROOT + "/api/buy/" + $(this).data("id"))
+            $.ajax(SITE_ROOT + "/basket/buy/" + $(this).data("id"))
                 .done(function(data) {
                     var bike = $.parseJSON(data);
                     toastSuccess("Successfully added " + bike.name + " to the shopping cart!");
@@ -49,7 +49,7 @@ $(function() {
         }));
 
     function updateShoppingCart() {
-        $.ajax(SITE_ROOT + "/api/count")
+        $.ajax(SITE_ROOT + "/basket/count")
             .done(function(data) {
                 if (!isNaN(data) && data > 0){
                     $("#shopping-cart-counter").text(data);
@@ -92,11 +92,11 @@ $(function() {
     });
 
     //live filtering
-    $("#filter-bikes").keyup(debounce(100, function() {
+    $("#filter-bikes").change(debounce(100, function() {
         var filter = $(this).val();
         $(".bike-thumbnail").each(function() {
-            if (!filter.empty && $(this).find(".bike-name").text().search(new RegExp(filter, "i")) < 0) {
-                $(this).fadeOut();
+            if (!!filter && $(this).find(".bike-category").text() !== filter) {
+                $(this).fadeOut(10);
             } else {
                 $(this).show();
             }

@@ -18,7 +18,7 @@ class Detail implements View {
     public function render() {
         echo '
         <h2>' . $this->model->bike->name . '</h2>
-        <p> Categorie: ' . $this->model->bike->category . '</p>
+        <p> Category: ' . $this->model->bike->category . '</p>
         <p>' . $this->model->bike->description . '</p>
 <div class="row">
     <div class="col-sm-6 col-md-6 col-lg-6">

@@ -25,7 +25,7 @@ class InMemoryCustomBikeRepository implements CustomBikeRepository{
             new CustomBike(8, "The Indian", "http://polaris.hs.llnwd.net/o40/ind/2017/img/pages/history/2014/el-nora/0.jpg",
                 40000.00, "Touring", "This the classic you've been waiting for, watch out, it's limited edition!", new DateTime('2017-04-25'), false),
             new CustomBike(9, "The Conductor", "https://s-media-cache-ak0.pinimg.com/originals/f6/5b/2b/f65b2bd1c6d3567beef299984a1c69d5.jpg",
-                39999.99, "Custom", "For those of you who like trains, planes and motorcycles", new DateTime('2017-04-26'), true)
+                39999.99, "Concept", "For those of you who like trains, planes and motorcycles", new DateTime('2017-04-26'), true)
         );
     }
 
@@ -85,5 +85,15 @@ class InMemoryCustomBikeRepository implements CustomBikeRepository{
 
     public function getAllBikes() {
         return $this->allBikes;
+    }
+
+    function getCategories() {
+        $categories = array();
+
+        foreach ($this->allBikes as $bike) {
+            $categories[$bike->category] = $bike->category;
+        }
+
+        return $categories;
     }
 }

@@ -57,7 +57,7 @@ function callController($controller, $viewName, $param) {
 
 function renderView($view) {
     if ($view instanceof View)
-        echo $view->render();
+        $view->render();
     else
         echo $view;
 }

@@ -35,8 +35,9 @@ class BikesController implements Controller {
 
     private function indexForAll() {
         $all = $this->getAll();
+        $categories = $this->getCategories();
 
-        $model = new IndexViewModel($all);
+        $model = new IndexViewModel($all, $categories);
 
         return new Index($model);
     }
@@ -80,5 +81,9 @@ class BikesController implements Controller {
         });
 
         return array_slice($sameCategoryNotSelf, 0, BikesController::NumberOfBikesFromSameCategory);
+    }
+
+    private function getCategories() {
+        return $this->customBikes->getCategories();
     }
 }

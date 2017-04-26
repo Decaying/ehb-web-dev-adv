@@ -12,4 +12,7 @@ interface CustomBikeRepository {
     function searchByName($name);
     function searchByCategory($category);
     function searchById($id);
+
+
+    function getCategories();
 }
