@@ -7,8 +7,8 @@ require_once(SERVICE_PATH . "/customBikeRepository.php");
 class HomeController {
     private $customBikes;
 
-    function __construct() {
-        $this->customBikes = new CustomBikeRepository();
+    function __construct(CustomBikeRepository $repo) {
+        $this->customBikes = $repo;
     }
 
     public function index() {

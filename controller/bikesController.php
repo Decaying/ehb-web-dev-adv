@@ -14,10 +14,11 @@ require_once(SERVICE_PATH . "/customBikeRepository.php");
 
 class BikesController {
     const NumberOfBikesFromSameCategory = 4;
+
     private $customBikes;
 
-    function __construct() {
-        $this->customBikes = new CustomBikeRepository();
+    function __construct(CustomBikeRepository $customBikes) {
+        $this->customBikes = $customBikes;
     }
 
     public function index() {
@@ -55,7 +56,7 @@ class BikesController {
     }
 
     private function getById($id) {
-        return $this->customBikes->getById($id);
+        return $this->customBikes->searchById($id);
     }
 
     private function getAll() {

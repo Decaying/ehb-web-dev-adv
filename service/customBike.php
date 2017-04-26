@@ -8,8 +8,9 @@ class CustomBike {
     public $price;
     public $description;
     public $dateAdded;
+    public $isHighlighted;
 
-    function __construct($id, $name, $image, $price, $category, $description, $dateAdded) {
+    function __construct($id, $name, $image, $price, $category, $description, $dateAdded, $isHighlighted) {
         $this->id = $id;
         $this->name = $name;
         $this->image = $image;
@@ -17,5 +18,6 @@ class CustomBike {
         $this->category = $category;
         $this->description = $description;
         $this->dateAdded = $dateAdded;
+        $this->isHighlighted = $isHighlighted;
     }
 }

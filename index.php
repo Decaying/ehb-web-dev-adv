@@ -7,15 +7,18 @@ $action = isset($_GET['a']) && !empty($_GET['a']) ? $_GET['a'] : "index";
 if (isset($_GET['id']) && !empty($_GET['id'])) $param = $_GET['id'];
 if (isset($_GET["q"])) $param = $_GET["q"];
 
+require_once(SERVICE_PATH . "/inMemoryCustomBikeRepository.php");
+$customBikes = new InMemoryCustomBikeRepository();
+
 if ($page === "search") {
     require_once("controller/searchResultsController.php");
-    $controller = new SearchResultsController();
+    $controller = new SearchResultsController($customBikes);
 } else if ($page === "home") {
     require_once("controller/homeController.php");
-    $controller = new HomeController();
+    $controller = new HomeController($customBikes);
 } else if ($page === "bikes") {
     require_once("controller/bikesController.php");
-    $controller = new BikesController();
+    $controller = new BikesController($customBikes);
 } else if ($page === "api") {
     register_shutdown_function(function() use($action, $page){
         if (error_get_last() !== NULL) {
@@ -25,7 +28,7 @@ if ($page === "search") {
     });
 
     require_once("controller/apiController.php");
-    $controller = new ApiController();
+    $controller = new ApiController($customBikes);
     if (isset($param)){
         $controller->$action($param);
     } else {

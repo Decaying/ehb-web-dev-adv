@@ -1,16 +1,17 @@
 <?php
-require_once(SERVICE_PATH . "/customBikeRepository.php");
+require_once(SERVICE_PATH . "/inMemoryCustomBikeRepository.php");
 
 class ApiController {
-    private $bikeRepo;
     const SessionKeyCart = "cart";
 
-    function __construct() {
-        $this->bikeRepo = new CustomBikeRepository();
+    private $customBikes;
+
+    function __construct(CustomBikeRepository $repo) {
+        $this->customBikes = $repo;
     }
 
     public function buy($id) {
-        $bike = $this->bikeRepo->getById($id);
+        $bike = $this->customBikes->searchById($id);
         if ($bike !== NULL) {
             $this->addToCart($bike);
 
