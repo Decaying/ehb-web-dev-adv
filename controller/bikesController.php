@@ -9,6 +9,7 @@ require_once("controller.php");
 
 require_once(VIEW_PATH . "/bikes/detail.php");
 require_once(VIEW_PATH . "/bikes/index.php");
+require_once(VIEW_PATH . "/notFound.php");
 require_once(MODEL_PATH . "/customBikeViewModel.php");
 require_once(MODEL_PATH . "/bikes/indexViewModel.php");
 require_once(MODEL_PATH . "/bikes/detailViewModel.php");
@@ -42,6 +43,11 @@ class BikesController implements Controller {
 
     private function indexById($id) {
         $bike = $this->getById($id);
+
+        if (!$bike) {
+            return new NotFound("Bike with id " . $id . " does not exist.");
+        }
+
         $sameCategory = $this->getSameCategory($bike);
 
         $model = new DetailViewModel($this->toBikeVm($bike), $this->toBikeVms($sameCategory));

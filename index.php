@@ -26,13 +26,10 @@ if ($controller instanceof ApiController){
 } else if ($controller instanceof Controller) {
     require_once("header.php");
 
-    ?>
-    <div class="container">
-        <?php
-        renderContent($controller, $viewName, $param);
-        ?>
-    </div>
-    <?php
+    echo '<div class="container">';
+    renderContent($controller, $viewName, $param);
+    echo '</div>';
+
     require_once("footer.php");
 } else {
     header('X-PHP-Response-Code: 500', true, 500);

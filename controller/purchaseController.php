@@ -17,7 +17,7 @@ class PurchaseController implements ApiController {
 
     public function buy($id) {
         $bike = $this->customBikes->searchById($id);
-        if ($bike !== NULL) {
+        if ($bike !== false) {
             $this->addToCart($bike);
 
             return json_encode($bike);
