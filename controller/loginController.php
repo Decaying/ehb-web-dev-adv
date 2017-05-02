@@ -1,5 +1,8 @@
 <?php
 
+use login\Index;
+use login\Register;
+
 require_once("controller.php");
 
 require_once(SERVICE_PATH . "/userRepository.php");

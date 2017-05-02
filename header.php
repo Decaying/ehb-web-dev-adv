@@ -48,7 +48,7 @@
                 </ul>
                 <div class="navbar-right">
                     <form class="navbar-form" role="search" action="<?php echo SITE_ROOT . "/search"; ?>" method="get">
-                        <a href="#" class="btn btn-success" id="shopping-cart" style="display: none;">
+                        <?php echo '<a href="' . SITE_ROOT . '/cart" class="btn btn-success" id="shopping-cart" style="display: none;">'; ?>
                             <span class="glyphicon glyphicon-shopping-cart">
                                 <span class="sr-only"># Items</span>
                             </span>

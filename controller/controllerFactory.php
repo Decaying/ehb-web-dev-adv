@@ -24,9 +24,20 @@ class ControllerFactory {
         } else if ($controllerName === "basket") {
             require_once("basketController.php");
             $controller = new BasketController($this->getBikeRepository(), $this->getPurchaseRepository());
-        }else if ($controllerName === "login") {
+        } else if ($controllerName === "login") {
             require_once("loginController.php");
             $controller = new LoginController($this->getUserRepository());
+        } else if ($controllerName === "cart") {
+            require_once("cartController.php");
+            $controller = new CartController($this->getBikeRepository(), $this->getPurchaseRepository());
+        } else {
+            $controllerClassname = ucfirst($controllerName . "Controller");
+            $controllerFilename = lcfirst($controllerClassname) . ".php";
+
+            if (file_exists($controllerFilename)) {
+                require_once($controllerFilename);
+                $controller = new $controllerClassname();
+            }
         }
 
         return $controller;

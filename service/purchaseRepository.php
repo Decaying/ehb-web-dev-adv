@@ -4,4 +4,6 @@ interface PurchaseRepository {
 
     function getNumberOfItemsInCart();
     function addToCart(CustomBike $bike);
+
+    function getCart();
 }

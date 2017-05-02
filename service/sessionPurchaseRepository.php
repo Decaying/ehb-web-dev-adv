@@ -21,9 +21,20 @@ class SessionPurchaseRepository implements PurchaseRepository {
     }
 
     private function initializeSession() {
-        session_start();
+
+        if(!isset($_SESSION)) {
+            session_start();
+        }
+
         if (!isset($_SESSION[SessionPurchaseRepository::SessionKeyCart])) {
             $_SESSION[SessionPurchaseRepository::SessionKeyCart] = array();
+        }
+    }
+
+    function getCart() {
+        $this->initializeSession();
+        if (isset($_SESSION[SessionPurchaseRepository::SessionKeyCart])) {
+            return $_SESSION[SessionPurchaseRepository::SessionKeyCart];
         }
     }
 }
