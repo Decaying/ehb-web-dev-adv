@@ -17,11 +17,7 @@ class LoginController implements Controller {
         if ($this->users->isUserLoggedIn()) {
             $this->redirectToHome();
         } else {
-            if (isset($_POST["user"]) && !empty($_POST["user"])) {
-                $this->redirectToHome();
-            } else {
-                return new Index();
-            }
+            return $this->doLogin();
         }
     }
 
@@ -36,5 +32,22 @@ class LoginController implements Controller {
     private function redirectToHome() {
         header('Location: ' . SITE_ROOT . '/');
         die(0);
+    }
+
+    private function doLogin() {
+        if ($this->hasValue("user") && $this->hasValue("pass")) {
+            $keep = $this->hasValue("keep");
+            if ($this->users->tryLogin($_POST["user"], $_POST["pass"], $keep)) {
+                $this->redirectToHome();
+            } else {
+                return new Index("Unable to login");
+            }
+        } else {
+            return new Index();
+        }
+    }
+
+    private function hasValue($key) {
+        return isset($_POST[$key]) && !empty($_POST[$key]);
     }
 }
