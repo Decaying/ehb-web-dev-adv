@@ -3,7 +3,7 @@
 interface UserRepository {
     function userExists($email);
 
-    function addUser($email, $pass);
+    function addUser($firstname, $lastname, $email, $pass);
 
     function validateUserPassword($user, $pass);
 }

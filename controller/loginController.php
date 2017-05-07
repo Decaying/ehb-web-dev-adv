@@ -58,9 +58,11 @@ class LoginController extends Controller {
     }
 
     private function doRegister() {
+        $firstname = $_POST["firstname"];
+        $lastname = $_POST["lastname"];
         $email = $_POST["email"];
         $pass = $_POST["pass"];
-        $success = $this->users->register($email, $pass);
+        $success = $this->users->register($firstname, $lastname, $email, $pass);
         if ($success !== true) {
             return new Register($email, $success);
         }

@@ -90,9 +90,9 @@ class SessionManager {
         }
     }
 
-    public function register($email, $pass) {
+    public function register($firstname, $lastname, $email, $pass) {
         if (!$this->users->userExists($email)) {
-            $this->users->addUser($email, $pass);
+            $this->users->addUser($firstname, $lastname, $email, $pass);
             return true;
         } else {
             return "User already exists.";

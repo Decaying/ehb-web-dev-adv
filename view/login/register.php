@@ -30,6 +30,18 @@ echo '
 <form action="' . SITE_ROOT . '/login/register" method="POST">
     <input type="hidden" name="form-id" value="register">
     <div class="row">
+        <label class="col-lg-2 col-md-2" for="firstname">First name: </label>
+        <div class="col-lg-10 col-md-10">
+            <input class="form-control" type="text" name="firstname" id="firstname">
+        </div>
+    </div>
+    <div class="row">
+        <label class="col-lg-2 col-md-2" for="lastname">Last name: </label>
+        <div class="col-lg-10 col-md-10">
+            <input class="form-control" type="text" name="lastname" id="lastname">
+        </div>
+    </div>
+    <div class="row">
         <label class="col-lg-2 col-md-2" for="email">Email address: </label>
         <div class="col-lg-10 col-md-10">';
             if ($this->email !== null)
