@@ -5,14 +5,14 @@ require_once("apiController.php");
 require_once(VIEW_PATH . "/notFound.php");
 
 require_once(SERVICE_PATH . "/customBikeRepository.php");
-require_once(SERVICE_PATH . "/purchaseRepository.php");
+require_once(SERVICE_PATH . "/sessionPurchaseManager.php");
 
 class BasketController implements ApiController {
 
     private $customBikes;
     private $purchases;
 
-    function __construct(CustomBikeRepository $bikes, PurchaseRepository $purchases) {
+    function __construct(CustomBikeRepository $bikes, SessionPurchaseManager $purchases) {
         $this->customBikes = $bikes;
         $this->purchases = $purchases;
     }

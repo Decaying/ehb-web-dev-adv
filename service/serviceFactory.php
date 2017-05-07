@@ -6,13 +6,13 @@ class ServiceFactory {
         return new InMemoryCustomBikeRepository();
     }
 
-    public function getPurchaseRepository() {
-        require_once("sessionPurchaseRepository.php");
-        return new SessionPurchaseRepository();
+    public function getSessionPurchaseManager() {
+        require_once("sessionPurchaseManager.php");
+        return new SessionPurchaseManager();
     }
 
-    public function getUserRepository() {
-        require_once("inMemoryUserRepository.php");
-        return new InMemoryUserRepository();
+    public function getSessionManager() {
+        require_once("sessionManager.php");
+        return new SessionManager();
     }
 }

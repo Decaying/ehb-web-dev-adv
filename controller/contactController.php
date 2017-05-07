@@ -4,11 +4,12 @@ use contact\Index;
 
 require_once("controller.php");
 require_once(VIEW_PATH . "/contact/index.php");
+require_once(SERVICE_PATH . "/sessionManager.php");
 
 class ContactController extends Controller {
     private $users;
 
-    function __construct(UserRepository $users) {
+    function __construct(SessionManager $users) {
         $this->users = $users;
     }
 

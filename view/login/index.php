@@ -26,6 +26,7 @@ class Index implements View {
 
 echo '        
 <form action="' . SITE_ROOT . '/login" method="POST">
+    <input type="hidden" name="form-id" value="login">
     <div class="row">
         <label class="col-lg-1 col-md-1" for="user">User: </label>
         <div class="col-lg-11 col-md-11">

@@ -52,10 +52,10 @@ class ControllerFactory {
     }
 
     private function getPurchaseRepository() {
-        return $this->factory->getPurchaseRepository();
+        return $this->factory->getSessionPurchaseManager();
     }
 
     private function getUserRepository() {
-        return $this->factory->getUserRepository();
+        return $this->factory->getSessionManager();
     }
 }
