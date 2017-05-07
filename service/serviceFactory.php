@@ -13,6 +13,11 @@ class ServiceFactory {
 
     public function getSessionManager() {
         require_once("sessionManager.php");
-        return new SessionManager();
+        return new SessionManager($this->getUserRepository());
+    }
+
+    public function getUserRepository() {
+        require_once("inMemoryUserRepository.php");
+        return new InMemoryUserRepository();
     }
 }
