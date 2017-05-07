@@ -1,16 +1,21 @@
 <?php
 
 use contact\Index;
+use contact\MessageSent;
 
 require_once("controller.php");
 require_once(VIEW_PATH . "/contact/index.php");
+require_once(VIEW_PATH . "/contact/messageSent.php");
 require_once(SERVICE_PATH . "/sessionManager.php");
+require_once(SERVICE_PATH . "/mailer.php");
 
 class ContactController extends Controller {
     private $users;
+    private $mailer;
 
-    function __construct(SessionManager $users) {
+    function __construct(SessionManager $users, Mailer $mailer) {
         $this->users = $users;
+        $this->mailer = $mailer;
     }
 
     public function index() {
@@ -21,9 +26,13 @@ class ContactController extends Controller {
     }
 
     public function send() {
-        if ($_POST["form-id"] === "contact") {
-            echo $_POST["remarks"];
-            die();
+        if ($this->users->isUserLoggedIn() && $_POST["form-id"] === "contact") {
+            $remarks = $_POST["remarks"];
+            $user = $this->users->getUserEmail();
+
+            $this->mailer->sendMailToAdmin($user, $remarks);
+
+            return new MessageSent();
         }
         $this->redirectToHome();
     }

@@ -1,11 +1,15 @@
 <?php
+
     $config = array(
-        "db" => array(
-            "host" => "",
+        "db" => array (
+            "hostname" => "",
             "user" => "",
-            "pass" => "",
+            "pass" => ""
         )
     );
+
+defined("ADMIN")
+    or define("ADMIN", "hans.buys@student.ehb.be");
 
 defined("ROOT_PATH")
     or define("ROOT_PATH", dirname(__FILE__));

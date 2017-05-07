@@ -32,7 +32,7 @@ class ControllerFactory {
             $controller = new CartController($this->getBikeRepository(), $this->getPurchaseRepository());
         } else if ($controllerName === "contact") {
             require_once("contactController.php");
-            $controller = new ContactController($this->getUserRepository());
+            $controller = new ContactController($this->getUserRepository(), $this->getMailer());
         } else if ($controllerName !== "") {
             $controllerClassname = ucfirst($controllerName . "Controller");
             $controllerFilename = lcfirst($controllerClassname) . ".php";
@@ -57,5 +57,9 @@ class ControllerFactory {
 
     private function getUserRepository() {
         return $this->factory->getSessionManager();
+    }
+
+    private function getMailer() {
+        return $this->factory->getMailer();
     }
 }
