@@ -8,6 +8,7 @@ require_once(VIEW_PATH . "/contact/index.php");
 require_once(VIEW_PATH . "/contact/messageSent.php");
 require_once(SERVICE_PATH . "/sessionManager.php");
 require_once(SERVICE_PATH . "/mailer.php");
+require_once(SERVICE_PATH . "/user.php");
 
 class ContactController extends Controller {
     private $users;
@@ -28,11 +29,12 @@ class ContactController extends Controller {
     public function send() {
         if ($this->users->isUserLoggedIn() && $_POST["form-id"] === "contact") {
             $remarks = htmlspecialchars($_POST["remarks"]);
-            $user = $this->users->getUserEmail();
+            $user = $this->users->getUser();
 
-            $this->mailer->sendMailToAdmin($user, $remarks);
-
-            return new MessageSent();
+            if ($this->mailer->sendMailToAdmin($user, $remarks))
+                return new MessageSent();
+            else
+                throw new Exception("Unable to send mail");
         }
         $this->redirectToHome();
     }

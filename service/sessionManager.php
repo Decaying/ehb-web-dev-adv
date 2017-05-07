@@ -2,6 +2,7 @@
 
 require_once(SERVICE_PATH . "/userRepository.php");
 require_once(SERVICE_PATH . "/sessionRepository.php");
+require_once(SERVICE_PATH . "/user.php");
 
 class SessionManager {
     const SessionKey = "login";
@@ -92,17 +93,23 @@ class SessionManager {
 
     public function register($firstname, $lastname, $email, $pass) {
         if (!$this->users->userExists($email)) {
-            $this->users->addUser($firstname, $lastname, $email, $pass);
+            $this->users->addUser(new User($firstname, $lastname, $email, $pass));
             return true;
         } else {
             return "User already exists.";
         }
     }
 
-    public function getUserEmail() {
+    /**
+     * @return User
+     */
+    public function getUser() {
         if ($this->isUserLoggedIn())
-            return $this->getCurrentUser();
-        return false;
+            $user = $this->users->getUser($this->getCurrentUser());
+            if (isset($user) && $user !== null)
+                return $user;
+
+        return null;
     }
 
     private function getToken() {

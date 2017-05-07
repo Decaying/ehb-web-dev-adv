@@ -6,12 +6,14 @@ class User {
     private $email;
     private $password;
     private $salt;
+    private $isAdmin;
 
-    function __construct($firstname, $lastname, $email, $password) {
+    function __construct($firstname, $lastname, $email, $password, $isAdmin = false) {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->email = $email;
         $this->password = $this->encrypt($password);
+        $this->isAdmin = $isAdmin;
     }
 
     private function encrypt($password) {
@@ -31,6 +33,11 @@ class User {
 
     public function getLastname() {
         return $this->lastname;
+    }
+
+    public function isAdmin()
+    {
+        return $this->isAdmin;
     }
 
     public function validatePassword($pass) {

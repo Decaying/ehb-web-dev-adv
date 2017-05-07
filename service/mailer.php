@@ -1,8 +1,10 @@
 <?php
 
+require_once(SERVICE_PATH . "/user.php");
+
 class Mailer {
 
-    public function sendMailToAdmin($user, $remarks) {
+    public function sendMailToAdmin(User $user, $remarks) {
 
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
@@ -13,7 +15,8 @@ class Mailer {
                 <title>Contact request</title>
             </head>
             <body>
-                <p>A contact request has been made by " . $user . "</p>
+                <p>A contact request has been made by " . $user->getFirstname() . " " . $user->getLastname() . "</p>
+                <p>Email address: " . $user->getEmail() . "</p>
                 <p>" . $remarks . "</p>
             </body>
             </html>";
@@ -21,6 +24,6 @@ class Mailer {
 
         global $config;
         $admin = $config["admin"];
-        mail($admin, "Contact request - " . $user, wordwrap($message), $headers);
+        return mail($admin, "Contact request - " . $user->getEmail(), wordwrap($message), $headers);
     }
 }

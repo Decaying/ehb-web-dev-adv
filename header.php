@@ -42,6 +42,11 @@
                     <?php if ($userRepository->isUserLoggedIn()) {
                         echo '<li><a href="' . SITE_ROOT . '/contact">Contact</a></li>';
                         echo '<li><a href="' . SITE_ROOT . '/login/logout">Logout</a></li>';
+
+                        $user = $userRepository->getUser();
+                        if ($user !== null && $user->isAdmin()){
+                            echo '<li><a href="' . SITE_ROOT . '/manage">Admin</a></li>';
+                        }
                     } else {
                         echo '<li><a href="' . SITE_ROOT . '/login">Login</a></li>';
                         echo '<li><a href="' . SITE_ROOT . '/login/register">Register</a></li>';
