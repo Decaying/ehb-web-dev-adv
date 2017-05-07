@@ -9,7 +9,7 @@ require_once(SERVICE_PATH . "/userRepository.php");
 require_once(VIEW_PATH . "/login/index.php");
 require_once(VIEW_PATH . "/login/register.php");
 
-class LoginController implements Controller {
+class LoginController extends Controller {
     private $users;
 
     function __construct(UserRepository $users) {
@@ -24,17 +24,19 @@ class LoginController implements Controller {
         }
     }
 
+    public function logout() {
+        if ($this->users->isUserLoggedIn()) {
+            $this->users->logout();
+        }
+        $this->redirectToHome();
+    }
+
     public function register() {
         if ($this->users->isUserLoggedIn()) {
             $this->redirectToHome();
         } else {
             return new Register();
         }
-    }
-
-    private function redirectToHome() {
-        header('Location: ' . SITE_ROOT . '/');
-        die(0);
     }
 
     private function doLogin() {

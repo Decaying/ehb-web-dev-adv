@@ -30,12 +30,16 @@ class ControllerFactory {
         } else if ($controllerName === "cart") {
             require_once("cartController.php");
             $controller = new CartController($this->getBikeRepository(), $this->getPurchaseRepository());
-        } else {
+        } else if ($controllerName === "contact") {
+            require_once("contactController.php");
+            $controller = new ContactController($this->getUserRepository());
+        } else if ($controllerName !== "") {
             $controllerClassname = ucfirst($controllerName . "Controller");
             $controllerFilename = lcfirst($controllerClassname) . ".php";
+            $controllerPath = CONTROLLER_PATH . "/" .$controllerFilename;
 
-            if (file_exists($controllerFilename)) {
-                require_once($controllerFilename);
+            if (file_exists($controllerPath)) {
+                require_once($controllerPath);
                 $controller = new $controllerClassname();
             }
         }

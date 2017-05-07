@@ -41,6 +41,7 @@
                     <li><a href="<?php echo SITE_ROOT . "/bikes"; ?>">Overview</a></li>
                     <?php if ($userRepository->isUserLoggedIn()) {
                         echo '<li><a href="' . SITE_ROOT . '/contact">Contact</a></li>';
+                        echo '<li><a href="' . SITE_ROOT . '/login/logout">Logout</a></li>';
                     } else {
                         echo '<li><a href="' . SITE_ROOT . '/login">Login</a></li>';
                         echo '<li><a href="' . SITE_ROOT . '/login/register">Register</a></li>';

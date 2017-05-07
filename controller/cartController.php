@@ -8,7 +8,7 @@ require_once("controller.php");
 require_once(VIEW_PATH . "/cart/index.php");
 require_once(MODEL_PATH . "/cart/indexViewModel.php");
 
-class CartController implements Controller {
+class CartController extends Controller {
 
     private $customBikes;
     private $purchases;

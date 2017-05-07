@@ -25,7 +25,7 @@ if (!method_exists($controller, $viewName)){
     throw new Exception("action '".$viewName."'' not mapped to controller '".$controllerName."'.");
 }
 
-if ($controller instanceof ApiController){
+if ($controller instanceof ApiController) {
     renderContent($controller, $viewName, $param);
 } else if ($controller instanceof Controller) {
     require_once("header.php");

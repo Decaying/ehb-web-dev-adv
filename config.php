@@ -20,7 +20,10 @@ defined("MODEL_PATH")
     or define("MODEL_PATH", ROOT_PATH.'/model');
 
 defined("SERVICE_PATH")
-or define("SERVICE_PATH", ROOT_PATH.'/service');
+    or define("SERVICE_PATH", ROOT_PATH.'/service');
+
+defined("CONTROLLER_PATH")
+    or define("CONTROLLER_PATH", ROOT_PATH.'/controller');
 
 ini_set("error_reporting", "true");
 error_reporting(E_ALL|E_STRICT);

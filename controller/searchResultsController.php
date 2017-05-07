@@ -7,7 +7,7 @@ require_once(MODEL_PATH . "/searchResultsViewModel.php");
 require_once(MODEL_PATH . "/customBikeViewModel.php");
 require_once(SERVICE_PATH . "/customBikeRepository.php");
 
-class SearchResultsController implements Controller{
+class SearchResultsController extends Controller{
     private $customBikes;
 
     function __construct(CustomBikeRepository $repo) {

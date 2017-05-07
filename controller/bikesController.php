@@ -15,7 +15,7 @@ require_once(MODEL_PATH . "/bikes/indexViewModel.php");
 require_once(MODEL_PATH . "/bikes/detailViewModel.php");
 require_once(SERVICE_PATH . "/customBikeRepository.php");
 
-class BikesController implements Controller {
+class BikesController extends Controller {
     const NumberOfBikesFromSameCategory = 4;
 
     private $customBikes;
