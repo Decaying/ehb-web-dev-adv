@@ -14,11 +14,13 @@ class Mailer {
             </head>
             <body>
                 <p>A contact request has been made by " . $user . "</p>
-                <p>".$remarks."</p>
-            
+                <p>" . $remarks . "</p>
             </body>
             </html>";
 
-        mail(ADMIN, "Contact request - " . $user, wordwrap($message), $headers);
+
+        global $config;
+        $admin = $config["admin"];
+        mail($admin, "Contact request - " . $user, wordwrap($message), $headers);
     }
 }

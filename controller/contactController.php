@@ -27,7 +27,7 @@ class ContactController extends Controller {
 
     public function send() {
         if ($this->users->isUserLoggedIn() && $_POST["form-id"] === "contact") {
-            $remarks = $_POST["remarks"];
+            $remarks = htmlspecialchars($_POST["remarks"]);
             $user = $this->users->getUserEmail();
 
             $this->mailer->sendMailToAdmin($user, $remarks);

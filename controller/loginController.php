@@ -47,7 +47,10 @@ class LoginController extends Controller {
 
     private function doLogin() {
         $keep = $this->hasValue("keep");
-        if ($this->users->tryLogin($_POST["user"], $_POST["pass"], $keep)) {
+        $user = $_POST["user"];
+        $pass = $_POST["pass"];
+
+        if ($this->users->tryLogin($user, $pass, $keep)) {
             $this->redirectToHome();
         } else {
             return new Index("Unable to login");
