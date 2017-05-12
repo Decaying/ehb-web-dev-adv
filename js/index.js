@@ -15,10 +15,10 @@ $(function() {
     //Add items to shopping cart
     $(".shop-item-toggle").hover(
         function () {
-            $(this).find(".shop-item").show();
+            $(this).find(".shop-item").removeClass('hide');
         },
         function () {
-            $(this).find(".shop-item").hide();
+            $(this).find(".shop-item").addClass('hide');
         }
     );
 
