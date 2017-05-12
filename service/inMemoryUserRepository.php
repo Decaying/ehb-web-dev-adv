@@ -7,7 +7,7 @@ class InMemoryUserRepository implements UserRepository {
     private $registeredUsers;
 
     function __construct() {
-        $adminUser = new User("Admin", "Istrator", "hans.buys@student.ehb.be", "adm1n", true);
+        $adminUser = new User("Hans", "Buys", "hans.buys@student.ehb.be", "adm1n", true);
 
         $this->registeredUsers = array(
             $adminUser->getEmail() => $adminUser
