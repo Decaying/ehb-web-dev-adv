@@ -1,6 +1,6 @@
 <?php
 
-require_once("model/purchase.php");
+require_once("model/cartItem.php");
 
 class SessionCartManager {
     const SessionKeyCart = "cart";
@@ -13,10 +13,11 @@ class SessionCartManager {
     function addToCart(CustomBike $bike) {
         $this->initializeSession();
         if(array_key_exists($bike->id, $_SESSION[SessionCartManager::SessionKeyCart])){
-            $purch = $_SESSION[SessionCartManager::SessionKeyCart][$bike->id];
-            $purch->addOneToAmount();
+            $cartItem = $this->getCartItem($bike);
+            $cartItem->addOneToAmount();
         } else {
-            $_SESSION[SessionCartManager::SessionKeyCart][$bike->id] = new Purchase($bike->id);
+            $cartItem = new CartItem($bike->id);
+            $this->addCartItem($cartItem);
         }
     }
 
@@ -36,5 +37,21 @@ class SessionCartManager {
         if (isset($_SESSION[SessionCartManager::SessionKeyCart])) {
             return $_SESSION[SessionCartManager::SessionKeyCart];
         }
+    }
+
+    /**
+     * @param CartItem $item
+     * @internal param CustomBike $bike
+     */
+    public function addCartItem(CartItem $item) {
+        $_SESSION[SessionCartManager::SessionKeyCart][$item->bikeId] = $item;
+    }
+
+    /**
+     * @param CustomBike $bike
+     * @return CartItem
+     */
+    public function getCartItem(CustomBike $bike) {
+        return $_SESSION[SessionCartManager::SessionKeyCart][$bike->id];
     }
 }

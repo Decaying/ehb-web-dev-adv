@@ -1,6 +1,6 @@
 <?php
 
-class Purchase {
+class CartItem {
     public $bikeId;
     public $amount;
 

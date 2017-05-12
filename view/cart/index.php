@@ -3,12 +3,12 @@
 namespace cart;
 
 use CustomBike;
-use Purchase;
+use CartItem;
 use View;
 
 require_once(VIEW_PATH . "/view.php");
 require_once(SERVICE_PATH . "/model/customBike.php");
-require_once(SERVICE_PATH . "/model/purchase.php");
+require_once(SERVICE_PATH . "/model/cartItem.php");
 
 class Index implements View {
 
@@ -39,7 +39,7 @@ class Index implements View {
         }
     }
 
-    private function renderBikeInCart(Purchase $purch, CustomBike $bike) {
+    private function renderBikeInCart(CartItem $purch, CustomBike $bike) {
         $price = $bike->price * $purch->amount;
         $this->totalPrice += $price;
         echo '<li>' . $purch->amount . ' x ' . $bike->name .' = &euro;' . $this->asNumber($price) . '</li>';

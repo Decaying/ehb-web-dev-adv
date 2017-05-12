@@ -7,7 +7,7 @@ require_once("controller.php");
 
 require_once(VIEW_PATH . "/cart/index.php");
 require_once(MODEL_PATH . "/cart/indexViewModel.php");
-require_once(SERVICE_PATH . "/model/purchase.php");
+require_once(SERVICE_PATH . "/model/cartItem.php");
 require_once(SERVICE_PATH . "/sessionCartManager.php");
 
 class CartController extends Controller {
@@ -42,7 +42,7 @@ class CartController extends Controller {
         return $bikes;
     }
 
-    private function getBike(Purchase $purch) {
+    private function getBike(CartItem $purch) {
         return $this->customBikes->searchById($purch->bikeId);
     }
 
