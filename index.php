@@ -1,8 +1,8 @@
 <?php
 require_once("config.php");
 
-$controllerName = isset($_GET['p']) && !empty($_GET['p']) ? $_GET['p'] : "home";
-$viewName = isset($_GET['a']) && !empty($_GET['a']) ? $_GET['a'] : "index";
+$controllerName = isset($_GET['p']) && !empty($_GET['p']) ? $_GET['p'] : DEFAULT_CONTROLLER;
+$viewName = isset($_GET['a']) && !empty($_GET['a']) ? $_GET['a'] : DEFAULT_ACTION;
 
 $param = (isset($_GET['id']) && !empty($_GET['id'])) ? $_GET['id'] : null;
 $param = (isset($_GET["q"]) && !empty($_GET['q'])) ? $_GET["q"] : $param;

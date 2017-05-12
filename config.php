@@ -27,6 +27,12 @@ defined("SERVICE_PATH")
 defined("CONTROLLER_PATH")
     or define("CONTROLLER_PATH", ROOT_PATH.'/controller');
 
+defined("DEFAULT_CONTROLLER")
+or define("DEFAULT_CONTROLLER", "home");
+
+defined("DEFAULT_ACTION")
+or define("DEFAULT_ACTION", "index");
+
 ini_set("error_reporting", "true");
 error_reporting(E_ALL|E_STRICT);
 ?>

@@ -1,5 +1,50 @@
 <?php
     $auth = $serviceFactory->getAuthenticationManager();
+
+    function navLink($descr, $controller = null, $action = null, $class = null, $displayAsListItem = true) {
+        if (isActivePage($controller, $action)) {
+            if ($class !== null)
+                $class .= ' ';
+            $class .= 'active';
+        }
+
+        if ($displayAsListItem)
+            echo '<li'. addClassAttrWhen($displayAsListItem, $class). '>';
+
+        echo '<a ' . addClassAttrWhen(!$displayAsListItem, $class) . 'href="' . asLink($controller, $action) . '">' . $descr . '</a></li>';
+    }
+
+    function isActivePage($controller, $action) {
+        global $controllerName;
+        global $viewName;
+
+        $controller = $controller === null ? DEFAULT_CONTROLLER : $controller;
+        $action = $action === null ? DEFAULT_ACTION : $action;
+
+        return $controller === $controllerName && $action === $viewName;
+    }
+
+    function asLink($controller = null, $action = null) {
+        $link = SITE_ROOT . '/';
+
+        if ($controller !== null)
+        {
+            $link .= $controller;
+
+            if ($action !== null) {
+                $link .= '/' . $action;
+            }
+        }
+
+        return $link;
+    }
+
+    function addClassAttrWhen($when, $class) {
+        if ($when && $class !== null)
+            return ' class="' . $class . '" ';
+        else
+            return ' ';
+    }
 ?>
 
 <!DOCTYPE html>
@@ -34,22 +79,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo SITE_ROOT . "/"; ?>">Custom Bikes</a>
+                <?php navLink('Custom Bikes', null, null, "navbar-brand", false); ?>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="<?php echo SITE_ROOT . "/bikes"; ?>">Overview</a></li>
-                    <?php if ($auth->isUserLoggedIn()) {
-                        echo '<li><a href="' . SITE_ROOT . '/contact">Contact</a></li>';
-                        echo '<li><a href="' . SITE_ROOT . '/login/logout">Logout</a></li>';
+                    <?php
+                    navLink('Overview', 'bikes');
+                    if ($auth->isUserLoggedIn()) {
+                        navLink('Contact', 'contact');
+                        navLink('Logout', 'login', 'logout');
 
                         $user = $auth->getUser();
                         if ($user !== null && $user->isAdmin()){
-                            echo '<li><a href="' . SITE_ROOT . '/manage">Admin</a></li>';
+                            navLink('Admin', 'manage');
                         }
                     } else {
-                        echo '<li><a href="' . SITE_ROOT . '/login">Login</a></li>';
-                        echo '<li><a href="' . SITE_ROOT . '/login/register">Register</a></li>';
+                        navLink('Login', 'login');
+                        navLink('Register', 'login', 'register');
                     } ?>
                 </ul>
                 <div class="navbar-right">
