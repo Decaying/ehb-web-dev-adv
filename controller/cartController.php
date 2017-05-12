@@ -8,31 +8,31 @@ require_once("controller.php");
 require_once(VIEW_PATH . "/cart/index.php");
 require_once(MODEL_PATH . "/cart/indexViewModel.php");
 require_once(SERVICE_PATH . "/model/purchase.php");
-require_once(SERVICE_PATH . "/sessionPurchaseManager.php");
+require_once(SERVICE_PATH . "/sessionCartManager.php");
 
 class CartController extends Controller {
 
     private $customBikes;
-    private $purchases;
+    private $cart;
 
-    function __construct(CustomBikeRepository $bikes, SessionPurchaseManager $purchases) {
+    function __construct(CustomBikeRepository $bikes, SessionCartManager $cart) {
         $this->customBikes = $bikes;
-        $this->purchases = $purchases;
+        $this->cart = $cart;
     }
 
     public function index() {
         $purchases = $this->getPurchases();
-        $bikes = $this->getBikes($purchases);
+        $bikes = $this->getBikesInCart($purchases);
         $model = new IndexViewModel($purchases, $bikes);
 
         return new Index($model);
     }
 
     private function getPurchases() {
-        return $this->purchases->getCart();
+        return $this->cart->getCart();
     }
 
-    private function getBikes(array $purchases) {
+    private function getBikesInCart(array $purchases) {
         $bikes = array();
 
         foreach ($purchases as $purch) {
@@ -44,5 +44,9 @@ class CartController extends Controller {
 
     private function getBike(Purchase $purch) {
         return $this->customBikes->searchById($purch->bikeId);
+    }
+
+    public function checkout() {
+
     }
 }

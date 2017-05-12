@@ -5,16 +5,16 @@ require_once("apiController.php");
 require_once(VIEW_PATH . "/notFound.php");
 
 require_once(SERVICE_PATH . "/customBikeRepository.php");
-require_once(SERVICE_PATH . "/sessionPurchaseManager.php");
+require_once(SERVICE_PATH . "/sessionCartManager.php");
 
 class BasketController implements ApiController {
 
     private $customBikes;
-    private $purchases;
+    private $cart;
 
-    function __construct(CustomBikeRepository $bikes, SessionPurchaseManager $purchases) {
+    function __construct(CustomBikeRepository $bikes, SessionCartManager $cart) {
         $this->customBikes = $bikes;
-        $this->purchases = $purchases;
+        $this->cart = $cart;
     }
 
     public function buy($id) {
@@ -30,10 +30,10 @@ class BasketController implements ApiController {
     }
 
     public function count(){
-        return $this->purchases->getNumberOfItemsInCart();
+        return $this->cart->getNumberOfItemsInCart();
     }
 
     private function addToCart(CustomBike $bike) {
-        $this->purchases->addToCart($bike);
+        $this->cart->addToCart($bike);
     }
 }

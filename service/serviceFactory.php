@@ -6,9 +6,9 @@ class ServiceFactory {
         return new InMemoryCustomBikeRepository();
     }
 
-    public function getSessionPurchaseManager() {
-        require_once("sessionPurchaseManager.php");
-        return new SessionPurchaseManager();
+    public function getSessionCartManager() {
+        require_once("sessionCartManager.php");
+        return new SessionCartManager();
     }
 
     public function getAuthenticationManager() {

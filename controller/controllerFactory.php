@@ -23,13 +23,13 @@ class ControllerFactory {
             $controller = new BikesController($this->getBikeRepository());
         } else if ($controllerName === "basket") {
             require_once("basketController.php");
-            $controller = new BasketController($this->getBikeRepository(), $this->getPurchaseRepository());
+            $controller = new BasketController($this->getBikeRepository(), $this->getSessionCartManager());
         } else if ($controllerName === "login") {
             require_once("loginController.php");
             $controller = new LoginController($this->getAuthenticationManager());
         } else if ($controllerName === "cart") {
             require_once("cartController.php");
-            $controller = new CartController($this->getBikeRepository(), $this->getPurchaseRepository());
+            $controller = new CartController($this->getBikeRepository(), $this->getSessionCartManager());
         } else if ($controllerName === "contact") {
             require_once("contactController.php");
             $controller = new ContactController($this->getAuthenticationManager(), $this->getMailer());
@@ -51,8 +51,8 @@ class ControllerFactory {
         return $this->factory->getCustomBikeRepository();
     }
 
-    private function getPurchaseRepository() {
-        return $this->factory->getSessionPurchaseManager();
+    private function getSessionCartManager() {
+        return $this->factory->getSessionCartManager();
     }
 
     private function getAuthenticationManager() {
