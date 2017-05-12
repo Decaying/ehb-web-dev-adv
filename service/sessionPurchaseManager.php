@@ -1,5 +1,7 @@
 <?php
 
+require_once("model/purchase.php");
+
 class SessionPurchaseManager {
     const SessionKeyCart = "cart";
 

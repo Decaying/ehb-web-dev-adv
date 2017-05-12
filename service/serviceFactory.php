@@ -11,14 +11,14 @@ class ServiceFactory {
         return new SessionPurchaseManager();
     }
 
-    public function getSessionManager() {
-        require_once("sessionManager.php");
-        return new SessionManager($this->getUserRepository(), $this->getSessionRepository());
+    public function getAuthenticationManager() {
+        require_once("authenticationManager.php");
+        return new AuthenticationManager($this->getUserRepository(), $this->getLoginTokenRepository());
     }
 
-    public function getSessionRepository() {
-        require_once("inMemorySessionRepository.php");
-        return new InMemorySessionRepository();
+    public function getLoginTokenRepository() {
+        require_once("inMemoryLoginTokenRepository.php");
+        return new InMemoryLoginTokenRepository();
     }
 
     public function getUserRepository() {

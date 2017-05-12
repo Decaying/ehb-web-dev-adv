@@ -1,6 +1,6 @@
 <?php
 
-require_once("user.php");
+require_once("model/user.php");
 
 class InMemoryUserRepository implements UserRepository {
 

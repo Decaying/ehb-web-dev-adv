@@ -7,6 +7,7 @@ require_once("controller.php");
 
 require_once(VIEW_PATH . "/cart/index.php");
 require_once(MODEL_PATH . "/cart/indexViewModel.php");
+require_once(SERVICE_PATH . "/model/purchase.php");
 require_once(SERVICE_PATH . "/sessionPurchaseManager.php");
 
 class CartController extends Controller {

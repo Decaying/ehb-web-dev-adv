@@ -1,6 +1,6 @@
 <?php
-require_once("customBike.php");
-require_once("purchase.php");
+require_once("model/customBike.php");
+require_once("model/purchase.php");
 require_once("customBikeRepository.php");
 
 class InMemoryCustomBikeRepository implements CustomBikeRepository{

@@ -19,7 +19,7 @@ defined("VIEW_PATH")
     or define("VIEW_PATH", ROOT_PATH.'/view');
 
 defined("MODEL_PATH")
-    or define("MODEL_PATH", ROOT_PATH.'/model');
+    or define("MODEL_PATH", ROOT_PATH.'/viewModel');
 
 defined("SERVICE_PATH")
     or define("SERVICE_PATH", ROOT_PATH.'/service');

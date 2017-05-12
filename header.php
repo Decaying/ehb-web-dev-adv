@@ -1,5 +1,5 @@
 <?php
-    $userRepository = $serviceFactory->getSessionManager();
+    $auth = $serviceFactory->getAuthenticationManager();
 ?>
 
 <!DOCTYPE html>
@@ -39,11 +39,11 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="<?php echo SITE_ROOT . "/bikes"; ?>">Overview</a></li>
-                    <?php if ($userRepository->isUserLoggedIn()) {
+                    <?php if ($auth->isUserLoggedIn()) {
                         echo '<li><a href="' . SITE_ROOT . '/contact">Contact</a></li>';
                         echo '<li><a href="' . SITE_ROOT . '/login/logout">Logout</a></li>';
 
-                        $user = $userRepository->getUser();
+                        $user = $auth->getUser();
                         if ($user !== null && $user->isAdmin()){
                             echo '<li><a href="' . SITE_ROOT . '/manage">Admin</a></li>';
                         }

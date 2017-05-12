@@ -6,7 +6,7 @@ use contact\MessageSent;
 require_once("controller.php");
 require_once(VIEW_PATH . "/contact/index.php");
 require_once(VIEW_PATH . "/contact/messageSent.php");
-require_once(SERVICE_PATH . "/sessionManager.php");
+require_once(SERVICE_PATH . "/authenticationManager.php");
 require_once(SERVICE_PATH . "/mailer.php");
 require_once(SERVICE_PATH . "/user.php");
 
@@ -14,7 +14,7 @@ class ContactController extends Controller {
     private $users;
     private $mailer;
 
-    function __construct(SessionManager $users, Mailer $mailer) {
+    function __construct(AuthenticationManager $users, Mailer $mailer) {
         $this->users = $users;
         $this->mailer = $mailer;
     }

@@ -1,6 +1,6 @@
 <?php
 
-class InMemorySessionRepository implements SessionRepository {
+class InMemoryLoginTokenRepository implements LoginTokenRepository {
 
     function __construct() {
         $this->initializeSession();

@@ -1,10 +1,10 @@
 <?php
 
 require_once(SERVICE_PATH . "/userRepository.php");
-require_once(SERVICE_PATH . "/sessionRepository.php");
-require_once(SERVICE_PATH . "/user.php");
+require_once(SERVICE_PATH . "/loginTokenRepository.php");
+require_once(SERVICE_PATH . "/model/user.php");
 
-class SessionManager {
+class AuthenticationManager {
     const SessionKey = "login";
     const LoggedInUserKey = "user";
     const OneYear = 60*60*24*365;
@@ -12,7 +12,7 @@ class SessionManager {
     private $users;
     private $sessions;
 
-    function __construct(UserRepository $users, SessionRepository $sessions) {
+    function __construct(UserRepository $users, LoginTokenRepository $sessions) {
         $this->users = $users;
         $this->sessions = $sessions;
     }
@@ -31,7 +31,7 @@ class SessionManager {
     }
 
     public function getCurrentUser() {
-        return $this->getCookieValue(SessionManager::LoggedInUserKey);
+        return $this->getCookieValue(AuthenticationManager::LoggedInUserKey);
     }
 
     private function getSessionValue($key) {
@@ -51,7 +51,7 @@ class SessionManager {
 
     public function tryLogin($user, $pass, $keep) {
         if ($this->users->userExists($user) && $this->users->validateUserPassword($user, $pass)) {
-            $this->setCookieValue(SessionManager::LoggedInUserKey, $user);
+            $this->setCookieValue(AuthenticationManager::LoggedInUserKey, $user);
 
             $token = $this->sessions->addSession($user, $keep);
             $this->setToken($keep, $token);
@@ -61,7 +61,7 @@ class SessionManager {
     }
 
     private function setCookieValue($key, $value) {
-        setcookie($key, $value, time()+SessionManager::OneYear, SITE_ROOT);
+        setcookie($key, $value, time()+AuthenticationManager::OneYear, SITE_ROOT);
     }
 
     private function setSessionValue($key, $value) {
@@ -76,13 +76,13 @@ class SessionManager {
     }
 
     public function logout() {
-        $this->unsetCookie(SessionManager::SessionKey);
-        $this->unsetSession(SessionManager::SessionKey);
+        $this->unsetCookie(AuthenticationManager::SessionKey);
+        $this->unsetSession(AuthenticationManager::SessionKey);
     }
 
     private function unsetCookie($key) {
         unset($_COOKIE[$key]);
-        setcookie($key, '', time()-SessionManager::OneYear, SITE_ROOT);
+        setcookie($key, '', time()-AuthenticationManager::OneYear, SITE_ROOT);
     }
 
     private function unsetSession($key) {
@@ -113,11 +113,11 @@ class SessionManager {
     }
 
     private function getToken() {
-        $cookieToken = $this->getCookieValue(SessionManager::SessionKey);
+        $cookieToken = $this->getCookieValue(AuthenticationManager::SessionKey);
         if ($cookieToken !== "")
             return $cookieToken;
 
-        $sessionToken = $this->getSessionValue(SessionManager::SessionKey);
+        $sessionToken = $this->getSessionValue(AuthenticationManager::SessionKey);
         if ($sessionToken !== "")
             return $sessionToken;
 
@@ -126,9 +126,9 @@ class SessionManager {
 
     private function setToken( $keep, $token) {
         if ($keep) {
-            $this->setCookieValue(SessionManager::SessionKey, $token);
+            $this->setCookieValue(AuthenticationManager::SessionKey, $token);
         } else {
-            $this->setSessionValue(SessionManager::SessionKey, $token);
+            $this->setSessionValue(AuthenticationManager::SessionKey, $token);
         }
     }
 }

@@ -5,14 +5,14 @@ use login\Register;
 
 require_once("controller.php");
 
-require_once(SERVICE_PATH . "/sessionManager.php");
+require_once(SERVICE_PATH . "/authenticationManager.php");
 require_once(VIEW_PATH . "/login/index.php");
 require_once(VIEW_PATH . "/login/register.php");
 
 class LoginController extends Controller {
     private $users;
 
-    function __construct(SessionManager $users) {
+    function __construct(AuthenticationManager $users) {
         $this->users = $users;
     }
 

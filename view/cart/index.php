@@ -7,8 +7,8 @@ use Purchase;
 use View;
 
 require_once(VIEW_PATH . "/view.php");
-require_once(SERVICE_PATH . "/customBike.php");
-require_once(SERVICE_PATH . "/purchase.php");
+require_once(SERVICE_PATH . "model/customBike.php");
+require_once(SERVICE_PATH . "model/purchase.php");
 
 class Index implements View {
 

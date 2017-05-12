@@ -1,6 +1,6 @@
 <?php
 
-require_once(SERVICE_PATH . "/user.php");
+require_once(SERVICE_PATH . "/model/user.php");
 
 class Mailer {
 
