@@ -11,7 +11,10 @@
         if ($displayAsListItem)
             echo '<li'. addClassAttrWhen($displayAsListItem, $class). '>';
 
-        echo '<a ' . addClassAttrWhen(!$displayAsListItem, $class) . 'href="' . asLink($controller, $action) . '">' . $descr . '</a></li>';
+        echo '<a ' . addClassAttrWhen(!$displayAsListItem, $class) . 'href="' . asLink($controller, $action) . '">' . $descr . '</a>';
+
+        if ($displayAsListItem)
+            echo '</li>';
     }
 
     function isActivePage($controller, $action) {

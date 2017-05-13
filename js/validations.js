@@ -12,6 +12,9 @@ function addValidation(selector, validations) {
             if (valid) {
                 message = validation();
                 valid = message === "";
+
+                if (message !== "")
+                    console.log(validation + " failed: " + message);
             }
         });
 
@@ -51,6 +54,18 @@ function checkEmpty(selector, fieldDescription) {
     return "";
 }
 
+function checkChecked(selector, errorText) {
+    if (!isChecked(selector))
+        return errorText;
+    return "";
+}
+
+function checkMinLength(selector, length, fieldDescription) {
+    if (hasInsufficientLength(selector, length))
+        return fieldDescription + " should have at least " + length + " characters.";
+    return "";
+}
+
 function checkInvalidEmail(selector, fieldDescription) {
     if (!isValidEmail(selector))
         return fieldDescription + " is malformed.";
@@ -73,6 +88,15 @@ function checkPasswordLength() {
 function isEmpty(selector) {
     value = $(selector).val();
     return  value === null || value === undefined || value === "";
+}
+
+function hasInsufficientLength(selector, length) {
+    value = $(selector).val();
+    return value.length < length;
+}
+
+function isChecked(selector) {
+    return $(selector).is(':checked');
 }
 
 function isValidEmail(selector) {

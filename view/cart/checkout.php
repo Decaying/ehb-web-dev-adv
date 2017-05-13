@@ -28,6 +28,7 @@ class Checkout implements View {
 <h3>Checkout</h3>
 
 <form action="" method="post">
+    <input type="hidden" name="form-id" value="checkout">
     <div class="form-group">
         <label for="dlvName">Name</label>
         <input class="form-control" id="dlvName" type="text" placeholder="' . $this->vm->getDeliveryname() . '" disabled>
@@ -65,7 +66,30 @@ class Checkout implements View {
             <input type="text" class="form-control" id="invCity">
         </div>
     </div>
-    <button type="submit" class="btn btn-default">Submit</button>
+    <div class="form-group">
+        <label for="dlvMethod">Delivery method</label>
+        <select class="form-control" id="dlvMethod">
+            <option value="pickup">Pickup</option>
+            <option value="delivery">Delivery</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="invMethod">Payment method</label>
+        <select class="form-control" id="invMethod">
+            <option value="cash">Cash</option>
+            <option value="visa">VISA</option>
+            <option value="mastercard">MasterCard</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+            <input type="checkbox" id="agreeToTerms" name="agreeToTerms"> Check this to agree to our 
+            </label>
+            <a href="#">terms & conditions</a>
+        </div>
+    </div>
+    <button type="submit" id="submit" class="btn btn-default" disabled>Submit</button>
 </form>
 ';
     }
