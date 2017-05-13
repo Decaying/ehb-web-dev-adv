@@ -29,7 +29,7 @@ class ControllerFactory {
             $controller = new LoginController($this->getAuthenticationManager());
         } else if ($controllerName === "cart") {
             require_once("cartController.php");
-            $controller = new CartController($this->getBikeRepository(), $this->getSessionCartManager());
+            $controller = new CartController($this->getBikeRepository(), $this->getSessionCartManager(), $this->getAuthenticationManager());
         } else if ($controllerName === "contact") {
             require_once("contactController.php");
             $controller = new ContactController($this->getAuthenticationManager(), $this->getMailer());

@@ -3,12 +3,16 @@
 abstract class Controller {
 
     protected function redirectToHome() {
-        header('Location: ' . SITE_ROOT . '/');
+        $this->redirectTo('/');
         exit;
     }
 
     protected function redirectToLogin() {
-        header('Location: ' . SITE_ROOT . '/login');
+        $this->redirectTo('/login');
+    }
+
+    protected function redirectTo($location) {
+        header('Location: ' . SITE_ROOT . $location);
         exit;
     }
 }

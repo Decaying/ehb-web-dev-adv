@@ -20,7 +20,7 @@ class LoginController extends Controller {
         if ($this->users->isUserLoggedIn()) {
             $this->redirectToHome();
         } else {
-            if ($this->hasValue("form-id") && $_POST["form-id"] === "login") {
+            if ($this->hasPostValue("form-id") && $_POST["form-id"] === "login") {
                 return $this->doLogin();
             }
             return new Index();
@@ -38,7 +38,7 @@ class LoginController extends Controller {
         if ($this->users->isUserLoggedIn()) {
             $this->redirectToHome();
         } else {
-            if ($this->hasValue("form-id") && $_POST["form-id"] === "register") {
+            if ($this->hasPostValue("form-id") && $_POST["form-id"] === "register") {
                 return $this->doRegister();
             }
             return new Register();
@@ -46,12 +46,17 @@ class LoginController extends Controller {
     }
 
     private function doLogin() {
-        $keep = $this->hasValue("keep");
+        $keep = $this->hasPostValue("keep");
         $user = $_POST["user"];
         $pass = $_POST["pass"];
 
         if ($this->users->tryLogin($user, $pass, $keep)) {
-            $this->redirectToHome();
+            if ($this->hasGetValue("redirect")) {
+                $redirect = $_GET["redirect"];
+                $this->redirectTo($redirect);
+            } else {
+                $this->redirectToHome();
+            }
         } else {
             return new Index("Unable to login");
         }
@@ -73,7 +78,11 @@ class LoginController extends Controller {
             $this->redirectToLogin();
     }
 
-    private function hasValue($key) {
+    private function hasGetValue($key) {
+        return isset($_GET[$key]) && !empty($_GET[$key]);
+    }
+
+    private function hasPostValue($key) {
         return isset($_POST[$key]) && !empty($_POST[$key]);
     }
 }

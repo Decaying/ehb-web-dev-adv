@@ -25,6 +25,7 @@ class Register implements View {
         }
 
 echo '
+<script src="' . SITE_ROOT .'/js/validations.js" lang="javascript"></script>
 <script src="' . SITE_ROOT .'/js/register.js" lang="javascript"></script>
 
 <form action="' . SITE_ROOT . '/login/register" method="POST">
