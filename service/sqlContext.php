@@ -14,7 +14,8 @@ class SqlContext {
 
     private function getConnection() {
         $conn = new mysqli($this->config["db"]["hostname"], $this->config["db"]["user"], $this->config["db"]["pass"], $this->config["db"]["database"]);
-        if (!!$conn->connect_error)
+
+        if (mysqli_connect_errno())
             throw new Exception("Connection failed: " . $conn->connect_error);
 
         $this->log->info("sql connection created");
@@ -30,14 +31,25 @@ class SqlContext {
         return $result;
     }
 
-    public function execute($sql) {
+    public function execute($sql, $isTransactional) {
         $conn = $this->getConnection();
+
+        if ($isTransactional)
+            $conn->autocommit(false);
 
         $this->log->info("executing query: ");
         $this->log->info($sql);
+
         $success = $conn->query($sql);
 
         $this->log->info("executed query: " . $success ? "success" : "error");
+
+        if ($isTransactional) {
+            if (!$conn->commit())
+                throw new Exception("commit failed");
+
+            $this->log->info("successfully commited sql");
+        }
 
         $this->close($conn);
 

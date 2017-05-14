@@ -19,8 +19,13 @@ class SqlSoldItemsRepository implements SoldItemsRepository {
 
         $sql = "BEGIN;";
 
-        $sql .= $this->addAddress($invAddress, $selectIntoInvoiceAddressId);
         $sql .= $this->addAddress($dlvAddress, $selectIntoDeliveryAddressId);
+
+        if ($invAddress !== $dlvAddress) {
+            $sql .= $this->addAddress($invAddress, $selectIntoInvoiceAddressId);
+        } else {
+            $selectIntoInvoiceAddressId = $selectIntoDeliveryAddressId;
+        }
 
         $sql .= $this->addSale($user, $invMethod, $dlvMethod, $agreedToTerms, $selectIntoInvoiceAddressId, $selectIntoDeliveryAddressId, $selectIntoSaleId);
 
@@ -31,7 +36,7 @@ class SqlSoldItemsRepository implements SoldItemsRepository {
         $sql .= "
 COMMIT;";
 
-        $this->context->execute($sql);
+        $this->context->execute($sql, true);
     }
 
     /**
@@ -42,7 +47,7 @@ COMMIT;";
     public function addCartItem(CartItem $item, $saleId) {
         return "
 INSERT INTO SalesLine (sales_id, bike_id, amount)
-    VALUES ('" . $saleId . "', '" . $item->bikeId . "', '" . $item->amount . "');
+    VALUES (" . $saleId . ", " . $item->bikeId . ", " . $item->amount . ");
             ";
     }
 
@@ -71,7 +76,7 @@ SELECT LAST_INSERT_ID() INTO " . $selectInto . ";";
     public function addSale(User $user, $invMethod, $dlvMethod, $agreedToTerms, $invoiceAddressId, $deliveryAddressId, $selectInto) {
         return "
 INSERT INTO Sales (user_id, invoice_address_id, delivery_address_id, invoice_method, delivery_method, agreed_to_terms)
-    VALUES ('" . $user->getId() . "', '" . $invoiceAddressId . "', '" . $deliveryAddressId . "', '" . $invMethod . "', '" . $dlvMethod . "', '" . $agreedToTerms . "');
+    VALUES (" . $user->getId() . ", " . $invoiceAddressId . ", " . $deliveryAddressId . ", '" . $invMethod . "', '" . $dlvMethod . "', " . $agreedToTerms . ");
 SELECT LAST_INSERT_ID() INTO " . $selectInto . ";";
     }
 }
