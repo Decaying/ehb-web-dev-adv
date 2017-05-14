@@ -29,7 +29,7 @@ class ControllerFactory {
             $controller = new LoginController($this->getAuthenticationManager());
         } else if ($controllerName === "cart") {
             require_once("cartController.php");
-            $controller = new CartController($this->getBikeRepository(), $this->getSessionCartManager(), $this->getAuthenticationManager());
+            $controller = new CartController($this->getBikeRepository(), $this->getSessionCartManager(), $this->getAuthenticationManager(), $this->getSoldItemsRepository());
         } else if ($controllerName === "contact") {
             require_once("contactController.php");
             $controller = new ContactController($this->getAuthenticationManager(), $this->getMailer());
@@ -61,5 +61,9 @@ class ControllerFactory {
 
     private function getMailer() {
         return $this->factory->getMailer();
+    }
+
+    private function getSoldItemsRepository() {
+        return $this->factory->getSoldItemsRepository();
     }
 }

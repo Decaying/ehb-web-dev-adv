@@ -1,6 +1,7 @@
 <?php
 
 require_once("soldItemsRepository.php");
+require_once("log.php");
 require_once("model/cartItem.php");
 
 class SqlSoldItemsRepository implements SoldItemsRepository {
@@ -12,22 +13,23 @@ class SqlSoldItemsRepository implements SoldItemsRepository {
     }
 
     function add(User $user, array $itemsInCart, Address $invAddress, Address $dlvAddress, $invMethod, $dlvMethod, $agreedToTerms) {
+        $selectIntoInvoiceAddressId = "@InvoiceAddressId";
+        $selectIntoDeliveryAddressId = "@DeliveryAddressId";
+        $selectIntoSaleId = "@SaleId";
 
         $sql = "BEGIN;";
 
-        $sql .= $this->addAddress($invAddress, "@InvoiceAddressId");
-        $sql .= $this->addAddress($dlvAddress, "@DeliveryAddressId");
+        $sql .= $this->addAddress($invAddress, $selectIntoInvoiceAddressId);
+        $sql .= $this->addAddress($dlvAddress, $selectIntoDeliveryAddressId);
 
-        echo "
-INSERT INTO Sales (user_id, invoice_address_id, delivery_address_id, invoice_method, delivery_method, agreed_to_terms)
-    VALUES ('" . $user->getId() . "', '@InvoiceAddressId', '@DeliveryAddressId', '" . $invMethod . "', '" . $dlvMethod . "', '" . $agreedToTerms . "');
-SELECT LAST_INSERT_ID() INTO @SaleId;";
+        $sql .= $this->addSale($user, $invMethod, $dlvMethod, $agreedToTerms, $selectIntoInvoiceAddressId, $selectIntoDeliveryAddressId, $selectIntoSaleId);
 
         foreach($itemsInCart as $item){
-            $sql .= $this->addCartItem($item);
+            $sql .= $this->addCartItem($item, $selectIntoSaleId);
         }
         
-        $sql .= "COMMIT;";
+        $sql .= "
+COMMIT;";
 
         $this->context->execute($sql);
     }
@@ -37,12 +39,11 @@ SELECT LAST_INSERT_ID() INTO @SaleId;";
      * @param $sql
      * @return string
      */
-    public function addCartItem(CartItem $item) {
-        $sql = "
+    public function addCartItem(CartItem $item, $saleId) {
+        return "
 INSERT INTO SalesLine (sales_id, bike_id, amount)
-    VALUES ('@SaleId', '" . $item->bikeId . "', '" . $item->amount . "');
+    VALUES ('" . $saleId . "', '" . $item->bikeId . "', '" . $item->amount . "');
             ";
-        return $sql;
     }
 
     /**
@@ -54,6 +55,23 @@ INSERT INTO SalesLine (sales_id, bike_id, amount)
         return "
 INSERT INTO Address (street, zipcode, city)
     VALUES ('" . $dlvAddress->getStreet() . "', '" . $dlvAddress->getZipcode() . "', '" . $dlvAddress->getCity() . "');
+SELECT LAST_INSERT_ID() INTO " . $selectInto . ";";
+    }
+
+    /**
+     * @param User $user
+     * @param $invMethod
+     * @param $dlvMethod
+     * @param $agreedToTerms
+     * @param $selectIntoInvoiceAddressId
+     * @param $selectIntoDeliveryAddressId
+     * @param $sql
+     * @return string
+     */
+    public function addSale(User $user, $invMethod, $dlvMethod, $agreedToTerms, $invoiceAddressId, $deliveryAddressId, $selectInto) {
+        return "
+INSERT INTO Sales (user_id, invoice_address_id, delivery_address_id, invoice_method, delivery_method, agreed_to_terms)
+    VALUES ('" . $user->getId() . "', '" . $invoiceAddressId . "', '" . $deliveryAddressId . "', '" . $invMethod . "', '" . $dlvMethod . "', '" . $agreedToTerms . "');
 SELECT LAST_INSERT_ID() INTO " . $selectInto . ";";
     }
 }

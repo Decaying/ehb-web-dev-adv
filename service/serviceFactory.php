@@ -30,4 +30,19 @@ class ServiceFactory {
         require_once("mailer.php");
         return new Mailer();
     }
+
+    public function getSoldItemsRepository() {
+        require_once("sqlSoldItemsRepository.php");
+        return new SqlSoldItemsRepository($this->getSqlContext());
+    }
+
+    public function getSqlContext() {
+        require_once("sqlContext.php");
+        return new SqlContext($this->getLog());
+    }
+
+    public function getLog() {
+        require_once("browserLog.php");
+        return new BrowserLog();
+    }
 }

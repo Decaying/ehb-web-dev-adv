@@ -1,12 +1,13 @@
 <?php
+    //fill in values where needed and rename to config.php
 
     $config = array(
-        "admin" => "hans.buys@student.ehb.be",
+        "admin" => "",          // the admin email address
         "db" => array (
-            "hostname" => "",
-            "database" => "",
-            "user" => "",
-            "pass" => ""
+            "hostname" => "",   // hostname for MySql server
+            "database" => "",   // database name
+            "user" => "",       // your MySql username
+            "pass" => ""        // the password for your MySql account
         )
     );
 
@@ -14,7 +15,7 @@ defined("ROOT_PATH")
     or define("ROOT_PATH", dirname(__FILE__));
 
 defined("SITE_ROOT")
-    or define("SITE_ROOT", "/~hans.buys");  // "/~hans.buys" voor EhB hosting, "" voor localhost
+    or define("SITE_ROOT", "/");
 
 defined("VIEW_PATH")
     or define("VIEW_PATH", ROOT_PATH.'/view');
