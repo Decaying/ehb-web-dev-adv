@@ -4,13 +4,16 @@ $(function() {
     //Search button
     //$("#searchButton").prop("disabled",true);
 
-    $("#searchInput").on("keyup", function () {
+    $("#searchInput").on("keyup", toggleSearchButton);
+    $("#searchInput").change(toggleSearchButton);
+
+    function toggleSearchButton() {
         if ($(this).val().length === 0) {
             $("#searchButton").prop("disabled", "disabled");
         } else {
             $("#searchButton").prop("disabled", false);
         }
-    });
+    }
 
     //Add items to shopping cart
     $(".shop-item-toggle").hover(

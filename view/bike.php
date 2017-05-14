@@ -17,7 +17,8 @@ class Bike {
             $b = new Bike($bike);
             $b->renderBikeAsThumbnail();
         }
-        echo '</div>';
+        if (count($bikes) > 0)
+            echo '</div>';
     }
 
     public function renderBikeAsThumbnail() {

@@ -24,6 +24,7 @@ class SqlContext {
     public function executeMulti(array $statements) {
         $this->connection->autocommit(false);
         $this->connection->begin_transaction();
+        $this->log->info("MySql transaction started");
 
         foreach ($statements as $statement){
             $this->executeOne($statement);
@@ -41,14 +42,12 @@ class SqlContext {
         $this->log->info("executing query: ");
         $this->log->info($sql);
 
-        $success = $this->connection->query($sql);
+        $result = $this->connection->query($sql);
         $this->log->info($this->connection->error);
 
         $this->checkQuery();
 
-        $this->log->info("executed query: " . $success ? "success" : "error");
-
-        return $success;
+        return $result;
     }
 
     public function escape_string($string) {

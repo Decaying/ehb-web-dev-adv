@@ -8,14 +8,16 @@ class BrowserLog implements Log {
      * @return bool
      */
     function infoEnabled() {
-        return true;
+        global $loggingEnabled;
+        return $loggingEnabled;
     }
 
     /**
      * @return bool
      */
     function errorEnabled() {
-        return true;
+        global $loggingEnabled;
+        return $loggingEnabled;
     }
 
     /**

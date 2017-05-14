@@ -1,8 +1,8 @@
 <?php
 
 require_once("soldItemsRepository.php");
-require_once("log.php");
 require_once("model/cartItem.php");
+require_once("sqlContext.php");
 
 class SqlSoldItemsRepository implements SoldItemsRepository {
 

@@ -3,6 +3,8 @@
 
     $config = array(
         "admin" => "",          // the admin email address
+        "phone" => "",          // the shop's phone number
+        "email" => "",          // the shop's email address
         "db" => array (
             "hostname" => "",   // hostname for MySql server
             "database" => "",   // database name

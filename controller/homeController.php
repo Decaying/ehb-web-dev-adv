@@ -18,17 +18,24 @@ class HomeController extends Controller {
         $highlights = $this->getHighlights();
         $latest = $this->getLatest();
 
+        $highlights = $highlights === null ? array() : $highlights;
+        $latest = $latest === null ? array() : $latest;
+
         $model = new HomeViewModel($highlights, $latest);
         return new Home($model);
     }
 
     public function getHighlights() {
         $allBikes = $this->customBikes->getHighlightedBikes();
+        if ($allBikes === null)
+            return null;
         return CustomBikeViewModel::FromCustomBikes($allBikes);
     }
 
     public function getLatest() {
         $allBikes = $this->customBikes->getLatestBikes();
+        if ($allBikes === null)
+            return null;
         return CustomBikeViewModel::FromCustomBikes($allBikes);
     }
 }

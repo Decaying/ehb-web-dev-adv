@@ -2,8 +2,10 @@
 
 class ServiceFactory {
     public function getCustomBikeRepository() {
-        require_once("inMemoryCustomBikeRepository.php");
-        return new InMemoryCustomBikeRepository();
+        require_once("sqlCustomBikeRepository.php");
+        return new SqlCustomBikeRepository($this->getSqlContext(), $this->getLog());
+        //require_once("inMemoryCustomBikeRepository.php");
+        //return new InMemoryCustomBikeRepository();
     }
 
     public function getSessionCartManager() {

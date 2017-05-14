@@ -37,6 +37,9 @@ class BikesController extends Controller {
         $all = $this->getAll();
         $categories = $this->getCategories();
 
+        $all = $all === null ? array() : $all;
+        $categories = $categories === null ? array() : $categories;
+
         $model = new IndexViewModel($all, $categories);
 
         return new Index($model);
@@ -70,6 +73,8 @@ class BikesController extends Controller {
 
     private function getAll() {
         $allBikes = $this->customBikes->getAllBikes();
+        if ($allBikes === null)
+            return null;
         return CustomBikeViewModel::FromCustomBikes($allBikes);
     }
 

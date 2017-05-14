@@ -15,12 +15,16 @@ class SearchResultsController extends Controller{
     }
 
     public function index($query) {
-        $model = new SearchResultsViewModel($query, $this->getSearchResults($query));
+        $results = $this->getSearchResults($query);
+        $results = $results === null ? array() : $results;
+        $model = new SearchResultsViewModel($query, $results);
         return new SearchResults($model);
     }
 
     private function getSearchResults($query) {
         $bikes = $this->customBikes->searchByName($query);
+        if ($bikes === null)
+            return null;
         return CustomBikeViewModel::FromCustomBikes($bikes);
     }
 }
