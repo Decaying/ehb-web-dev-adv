@@ -13,9 +13,9 @@ $(function() {
         function () { return checkEmpty("#dlvStreet", "Street and number") }
     ]);
 
-    addValidation("dlvZip", [
-        function () { return checkEmpty("#dlvZip", "Zipcode") },
-        function () { return checkMinLength("#dlvZip", 4, "Zipcode") }
+    addValidation("dlvZipcode", [
+        function () { return checkEmpty("#dlvZipcode", "Zipcode") },
+        function () { return checkMinLength("#dlvZipcode", 4, "Zipcode") }
     ]);
 
     addValidation("agreeToTerms", [
@@ -34,16 +34,16 @@ $(function() {
                 return "";}
     ]);
 
-    addValidation("invZip", [
+    addValidation("invZipcode", [
         function () {
             if (!$('#useDlvAsInv').is(':checked'))
-                return checkEmpty("#invZip", "Zipcode");
+                return checkEmpty("#invZipcode", "Zipcode");
             else
                 return "";
         },
         function () {
             if (!$('#useDlvAsInv').is(':checked'))
-                return checkMinLength("#invZip", 4, "Zipcode");
+                return checkMinLength("#invZipcode", 4, "Zipcode");
             else
                 return "";
         }

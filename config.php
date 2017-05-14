@@ -4,6 +4,7 @@
         "admin" => "hans.buys@student.ehb.be",
         "db" => array (
             "hostname" => "",
+            "database" => "",
             "user" => "",
             "pass" => ""
         )

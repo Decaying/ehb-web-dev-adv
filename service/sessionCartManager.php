@@ -22,16 +22,18 @@ class SessionCartManager {
     }
 
     private function initializeSession() {
-
         if(!isset($_SESSION)) {
             session_start();
         }
 
         if (!isset($_SESSION[SessionCartManager::SessionKeyCart])) {
-            $_SESSION[SessionCartManager::SessionKeyCart] = array();
+            $this->clearCart();
         }
     }
 
+    /**
+     * @return array
+     */
     function getCart() {
         $this->initializeSession();
         if (isset($_SESSION[SessionCartManager::SessionKeyCart])) {
@@ -53,5 +55,9 @@ class SessionCartManager {
      */
     public function getCartItem(CustomBike $bike) {
         return $_SESSION[SessionCartManager::SessionKeyCart][$bike->id];
+    }
+
+    public function clearCart() {
+        $_SESSION[SessionCartManager::SessionKeyCart] = array();
     }
 }

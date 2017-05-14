@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: HansB
- * Date: 12/05/2017
- * Time: 19:54
- */
 
 namespace cart;
 

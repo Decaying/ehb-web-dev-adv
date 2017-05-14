@@ -15,4 +15,12 @@ abstract class Controller {
         header('Location: ' . SITE_ROOT . $location);
         exit;
     }
+
+    protected function hasPostValue($key) {
+        return isset($_POST[$key]) && !empty($_POST[$key]);
+    }
+
+    protected function hasGetValue($key) {
+        return isset($_GET[$key]) && !empty($_GET[$key]);
+    }
 }

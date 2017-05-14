@@ -7,13 +7,15 @@ class User {
     private $password;
     private $salt;
     private $isAdmin;
+    private $id;
 
-    function __construct($firstname, $lastname, $email, $password, $isAdmin = false) {
+    function __construct($firstname, $lastname, $email, $password, $isAdmin = false, $id = 0) {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->email = $email;
         $this->password = $this->encrypt($password);
         $this->isAdmin = $isAdmin;
+        $this->id = $id;
     }
 
     private function encrypt($password) {
@@ -42,5 +44,9 @@ class User {
 
     public function validatePassword($pass) {
         return $this->password === $this->encrypt($pass);
+    }
+
+    public function getId() {
+        return $this->id;
     }
 }

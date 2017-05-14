@@ -77,12 +77,4 @@ class LoginController extends Controller {
         else
             $this->redirectToLogin();
     }
-
-    private function hasGetValue($key) {
-        return isset($_GET[$key]) && !empty($_GET[$key]);
-    }
-
-    private function hasPostValue($key) {
-        return isset($_POST[$key]) && !empty($_POST[$key]);
-    }
 }
