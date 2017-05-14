@@ -5,54 +5,85 @@ require_once("log.php");
 class SqlContext {
     private $config;
     private $log;
+    private $connection;
 
     function __construct(Log $log) {
         global $config;
+
         $this->config = $config;
         $this->log = $log;
+
+        $this->connection = $this->getConnection();
+        $this->checkConnection();
     }
 
     private function getConnection() {
-        $conn = new mysqli($this->config["db"]["hostname"], $this->config["db"]["user"], $this->config["db"]["pass"], $this->config["db"]["database"]);
-
-        if (mysqli_connect_errno())
-            throw new Exception("Connection failed: " . $conn->connect_error);
-
-        $this->log->info("sql connection created");
-
-        return $conn;
+        return new mysqli($this->config["db"]["hostname"], $this->config["db"]["user"], $this->config["db"]["pass"], $this->config["db"]["database"]);
     }
 
-    private function close(mysqli $conn) {
-        $result = $conn->close();
+    public function executeMulti(array $statements) {
+        $this->connection->autocommit(false);
+        $this->connection->begin_transaction();
 
-        $this->log->info("sql connection closed");
+        foreach ($statements as $statement){
+            $this->executeOne($statement);
+        }
 
-        return $result;
+        if (!$this->connection->commit())
+            throw new Exception("commit failed");
+
+        $this->log->info("successfully commited to MySql");
     }
 
-    public function execute($sql, $isTransactional) {
-        $conn = $this->getConnection();
-
-        if ($isTransactional)
-            $conn->autocommit(false);
+    public function executeOne($sql) {
+        $this->initialize();
 
         $this->log->info("executing query: ");
         $this->log->info($sql);
 
-        $success = $conn->query($sql);
+        $success = $this->connection->query($sql);
+        $this->log->info($this->connection->error);
+
+        $this->checkQuery();
 
         $this->log->info("executed query: " . $success ? "success" : "error");
 
-        if ($isTransactional) {
-            if (!$conn->commit())
-                throw new Exception("commit failed");
-
-            $this->log->info("successfully commited sql");
-        }
-
-        $this->close($conn);
-
         return $success;
+    }
+
+    public function escape_string($string) {
+        $this->initialize();
+        return $this->connection->escape_string($string);
+    }
+
+    public function close() {
+        $result = $this->connection->close();
+
+        if ($result)
+            $this->log->info("MySql connection closed");
+        else
+            throw new Exception("Could not close the MySql connection");
+
+        $this->connection = null;
+
+        return $result;
+    }
+
+    private function initialize() {
+        if ($this->connection === null) {
+            $this->connection = $this->getConnection();
+
+            $this->log->info("MySql connection created");
+        }
+    }
+
+    private function checkConnection() {
+        if ($this->connection->connect_error)
+            throw new Exception("MySql connection failed: " . $this->connection->connect_error);
+    }
+
+    private function checkQuery() {
+        if ($this->connection->error)
+            throw new Exception("MySql query failed: " . $this->connection->error);
     }
 }
