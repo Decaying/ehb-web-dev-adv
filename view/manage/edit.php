@@ -17,6 +17,7 @@ class Edit implements View {
     }
 
     function render() {
+        $root = SITE_ROOT;
         $name = $this->bike->name;
         $category = $this->bike->category;
         $price = $this->bike->getPrice();
@@ -24,7 +25,9 @@ class Edit implements View {
         $image = $this->bike->image;
         $isHighlighted = $this->bike->isHighlighted ? 'checked' : '';
         echo "
-<h3>Create a new bike</h3>
+<script src='$root/js/validations.js' lang='javascript'></script>
+<script src='$root/js/edit_bike.js' lang='javascript'></script>
+<h3>Edit</h3>
 <form action='' method='post'>
     <input type='hidden' name='form-id' value='edit-bike'>
     

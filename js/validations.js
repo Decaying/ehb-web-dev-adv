@@ -108,3 +108,13 @@ function isValidEmail(selector) {
 function showError(selector, message, messageDivId) {
     $(selector).after("<div class='panel panel-danger' id='" + messageDivId + "'> <div class='panel-heading'>" + message + "</div> </div>");
 }
+
+function checkPositiveNumber(selector, fieldDescription) {
+    let number = parseFloat($(selector).val());
+
+    if (number < 0) {
+        return fieldDescription + " must be a positive number";
+    }
+
+    return "";
+}

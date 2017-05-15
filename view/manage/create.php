@@ -9,8 +9,12 @@ require_once(VIEW_PATH . "/view.php");
 class Create implements View {
 
     function render() {
+        $root = SITE_ROOT;
         echo "
-<h3>Create a new bike</h3>
+<script src='$root/js/validations.js' lang='javascript'></script>
+<script src='$root/js/create_bike.js' lang='javascript'></script>
+
+<h3>Create</h3>
 <form action='' method='post'>
     <input type='hidden' name='form-id' value='create-bike'>
     
