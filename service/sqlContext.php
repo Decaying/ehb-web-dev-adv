@@ -33,7 +33,7 @@ class SqlContext {
         if (!$this->connection->commit())
             throw new Exception("commit failed");
 
-        $this->log->info("successfully commited to MySql");
+        $this->log->info("successfully committed to MySql");
     }
 
     public function executeOne($sql) {

@@ -9,13 +9,19 @@ class User {
     private $isAdmin;
     private $id;
 
-    function __construct($firstname, $lastname, $email, $password, $isAdmin = false, $id = 0) {
+    function __construct($firstname, $lastname, $email, $password, $isAdmin = false, $id = 0, $salt = null) {
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->email = $email;
-        $this->password = $this->encrypt($password);
         $this->isAdmin = $isAdmin;
         $this->id = $id;
+
+        if ($salt === null) {
+            $this->password = $this->encrypt($password);
+        } else {
+            $this->password = $password;
+            $this->salt = $salt;
+        }
     }
 
     private function encrypt($password) {
@@ -23,6 +29,14 @@ class User {
             $this->salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
 
         return crypt($password, $this->salt);
+    }
+
+    public function getSalt() {
+        return $this->salt;
+    }
+
+    public function getPassword() {
+        return $this->password;
     }
 
     public function getEmail() {

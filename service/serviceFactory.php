@@ -24,8 +24,11 @@ class ServiceFactory {
     }
 
     public function getUserRepository() {
-        require_once("inMemoryUserRepository.php");
-        return new InMemoryUserRepository();
+        //require_once("inMemoryUserRepository.php");
+        //return new InMemoryUserRepository();
+
+        require_once("sqlUserRepository.php");
+        return new SqlUserRepository($this->getSqlContext());
     }
 
     public function getMailer() {
