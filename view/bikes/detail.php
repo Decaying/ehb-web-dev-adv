@@ -27,7 +27,7 @@ class Detail implements View {
         
     </div>
     <div class="col-sm-6 col-md-6 col-lg-6">
-        <p>Price : ' . $this->model->bike->price . '</p>
+        <p>Price : ' . $this->model->bike->getPriceWithCurrency() . '</p>
         <p><a href="#" data-id="' . $this->model->bike->id . '" class="btn btn-success shop-item-button">
             <span class="glyphicon glyphicon-shopping-cart"></span>
             Add to cart

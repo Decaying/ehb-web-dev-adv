@@ -33,6 +33,9 @@ class ControllerFactory {
         } else if ($controllerName === "contact") {
             require_once("contactController.php");
             $controller = new ContactController($this->getAuthenticationManager(), $this->getMailer());
+        } else if ($controllerName === "manage") {
+            require_once("manageController.php");
+            $controller = new ManageController($this->getBikeRepository());
         } else if ($controllerName !== "") {
             $controllerClassname = ucfirst($controllerName . "Controller");
             $controllerFilename = lcfirst($controllerClassname) . ".php";

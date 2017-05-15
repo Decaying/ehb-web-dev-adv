@@ -10,7 +10,7 @@ class CustomBike {
     public $dateAdded;
     public $isHighlighted;
 
-    function __construct($id, $name, $image, $price, $category, $description, $dateAdded, $isHighlighted) {
+    function __construct($name, $category, $price, $description, $image, $isHighlighted, $id = null, $dateAdded = null) {
         $this->id = $id;
         $this->name = $name;
         $this->image = $image;

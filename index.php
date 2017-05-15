@@ -63,8 +63,6 @@ function callController($controller, $viewName, $param) {
 
 function renderView($view) {
     if ($view instanceof View) {
-        global $loggingEnabled;
-        $loggingEnabled = true;
         $view->render();
     } else {
         echo $view;

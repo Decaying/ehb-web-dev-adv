@@ -26,7 +26,7 @@ class SqlCustomBikeRepository implements CustomBikeRepository {
     }
 
     private function map($row) {
-        return new CustomBike($row[0], $row[1], $row[2], $row[4], $row[3], $row[5], $row[6], $row[7]);
+        return new CustomBike($row[1], $row[3], $row[4], $row[5], $row[2], $row[7], $row[0], $row[6]);
     }
 
     function getLatestBikes() {
@@ -110,5 +110,32 @@ class SqlCustomBikeRepository implements CustomBikeRepository {
         }
 
         return $categories;
+    }
+
+    function delete($id) {
+        $this->context->executeOne("DELETE FROM Bikes WHERE id = $id");
+    }
+
+    function add(CustomBike $bike) {
+        $name = $this->context->escape_string($bike->name);
+        $category = $this->context->escape_string($bike->category);
+        $description = $this->context->escape_string($bike->description);
+        $image = $this->context->escape_string($bike->image);
+        $price = $bike->price;
+        $isHighlighted = $bike->isHighlighted ? 1 : 0;
+
+        $this->context->executeOne("INSERT INTO Bikes (name, category, price, description, image, is_highlighted) VALUES ('$name', '$category', $price, '$description', '$image', $isHighlighted)");
+    }
+
+    function update(CustomBike $bike) {
+        $id = $bike->id;
+        $name = $this->context->escape_string($bike->name);
+        $category = $this->context->escape_string($bike->category);
+        $description = $this->context->escape_string($bike->description);
+        $image = $this->context->escape_string($bike->image);
+        $price = $bike->price;
+        $isHighlighted = $bike->isHighlighted ? 1 : 0;
+
+        $this->context->executeOne("UPDATE Bikes SET name = '$name', category = '$category', description = '$description', image = '$image', price = $price, is_highlighted = $isHighlighted WHERE id = $id");
     }
 }

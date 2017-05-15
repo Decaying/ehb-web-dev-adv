@@ -15,4 +15,10 @@ interface CustomBikeRepository {
 
 
     function getCategories();
+
+    function delete($id);
+
+    function add(CustomBike $bike);
+
+    function update(CustomBike $bike);
 }

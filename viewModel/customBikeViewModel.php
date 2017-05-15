@@ -5,16 +5,26 @@ class CustomBikeViewModel {
     public $description;
     public $image;
     public $id;
-    public $price;
+    private $price;
     public $category;
+    public $isHighlighted;
 
-    function __construct($id, $name, $image, $description, $price, $category) {
+    function __construct($id, $name, $image, $description, $price, $category, $isHighlighted) {
         $this->id = $id;
         $this->name = $name;
         $this->image = $image;
         $this->description = $description;
-        $this->price = '&euro; ' . number_format($price, 2);
+        $this->price = $price;
         $this->category = $category;
+        $this->isHighlighted = $isHighlighted;
+    }
+
+    public function getPriceWithCurrency() {
+        return '&euro; ' . $this->getPrice();
+    }
+
+    public function getPrice() {
+        return number_format($this->price, 2);
     }
 
     public static function FromCustomBikes(array $bikes) {
@@ -28,6 +38,6 @@ class CustomBikeViewModel {
     }
 
     public static function FromCustomBike(CustomBike $bike) {
-        return new CustomBikeViewModel($bike->id, $bike->name, $bike->image, $bike->description, $bike->price, $bike->category);
+        return new CustomBikeViewModel($bike->id, $bike->name, $bike->image, $bike->description, $bike->price, $bike->category, $bike->isHighlighted);
     }
 }

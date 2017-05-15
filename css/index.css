@@ -12,6 +12,14 @@
     padding:5px 3px;
 }
 
+.btn-top-right {
+    position:absolute;
+    right:10px;
+    top:10px;
+    margin:0;
+    padding:5px 3px;
+}
+
 .shop-item {
     display: none;
 }
