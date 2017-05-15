@@ -42,7 +42,7 @@ class Detail implements View {
         </a></p>
         <p><span class='glyphicon glyphicon-ok' style='color:green;'></span> Gratis afhaling</p>
         <p><span class='glyphicon glyphicon-ok' style='color:green;'></span> Gratis levering</p>
-        <p><span class='glyphicon glyphicon-ok'style='color:green;'></span> 30 dagen bedenktijd</p>
+        <p><span class='glyphicon glyphicon-ok' style='color:green;'></span> 30 dagen bedenktijd</p>
     </div>
 </div>";
         if (count($this->model->sameCategory) > 0) {
