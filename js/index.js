@@ -1,17 +1,19 @@
 $(function() {
-    SITE_ROOT = "/~hans.buys";
+    let $SITE_ROOT = "/~hans.buys";
 
     //Search button
     //$("#searchButton").prop("disabled",true);
 
-    $("#searchInput").on("keyup", toggleSearchButton);
-    $("#searchInput").change(toggleSearchButton);
+    let $searchInput = $("#searchInput");
+    $searchInput.on("keyup", toggleSearchButton);
+    $searchInput.change(toggleSearchButton);
 
     function toggleSearchButton() {
+        let $searchButton = $("#searchButton");
         if ($(this).val().length === 0) {
-            $("#searchButton").prop("disabled", "disabled");
+            $searchButton.prop("disabled", "disabled");
         } else {
-            $("#searchButton").prop("disabled", false);
+            $searchButton.prop("disabled", false);
         }
     }
 
@@ -26,23 +28,23 @@ $(function() {
     );
 
     function debounce(delay, func) {
-        var timeout;
+        let $timeout;
         return function() {
-            var context = this,
+            let context = this,
                 args = arguments;
 
-            clearTimeout(timeout);
+            clearTimeout($timeout);
 
-            timeout = setTimeout(function() {
+            $timeout = setTimeout(function() {
                 func.apply(context, args);
             }, delay);
         }
     }
 
     $(".shop-item-button").click(debounce(250, function() {
-            $.ajax(SITE_ROOT + "/basket/buy/" + $(this).data("id"))
+            $.ajax($SITE_ROOT + "/basket/buy/" + $(this).data("id"))
                 .done(function(data) {
-                    var bike = $.parseJSON(data);
+                    let bike = $.parseJSON(data);
                     toastSuccess("Successfully added " + bike.name + " to the shopping cart!");
                     updateShoppingCart();
                 }).fail(function() {
@@ -51,7 +53,7 @@ $(function() {
         }));
 
     function updateShoppingCart() {
-        $.ajax(SITE_ROOT + "/basket/count")
+        $.ajax($SITE_ROOT + "/basket/count")
             .done(function(data) {
                 if (!isNaN(data) && data > 0){
                     $("#shopping-cart-counter").text(data);
@@ -72,15 +74,17 @@ $(function() {
     //toast bar on top
     function toastError(text) {
         console.error(text);
-        $("#toast-panel").removeClass("panel-success");
-        $("#toast-panel").addClass("panel-error");
+        let $toast = $("#toast-panel");
+        $toast.removeClass("panel-success");
+        $toast.addClass("panel-error");
         toast(text);
     }
 
     function toastSuccess(text) {
         console.log(text);
-        $("#toast-panel").addClass("panel-success");
-        $("#toast-panel").removeClass("panel-error");
+        let $toast = $("#toast-panel");
+        $toast.addClass("panel-success");
+        $toast.removeClass("panel-error");
         toast(text);
     }
 
@@ -95,9 +99,9 @@ $(function() {
 
     //live filtering
     $("#filter-bikes").change(debounce(100, function() {
-        var filter = $(this).val();
+        let $filter = $(this).val();
         $(".bike-thumbnail").each(function() {
-            if (!!filter && $(this).find(".bike-category").text() !== filter) {
+            if (!!$filter && $(this).find(".bike-category").text() !== $filter) {
                 $(this).fadeOut(10);
             } else {
                 $(this).show();

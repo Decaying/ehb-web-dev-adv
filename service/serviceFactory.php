@@ -52,4 +52,9 @@ class ServiceFactory {
         require_once("browserLog.php");
         return new BrowserLog();
     }
+
+    public function getRatingsRepository() {
+        require_once("sqlRatingsRepository.php");
+        return new SqlRatingsRepository($this->getSqlContext());
+    }
 }

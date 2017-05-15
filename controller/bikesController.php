@@ -14,14 +14,20 @@ require_once(MODEL_PATH . "/customBikeViewModel.php");
 require_once(MODEL_PATH . "/bikes/indexViewModel.php");
 require_once(MODEL_PATH . "/bikes/detailViewModel.php");
 require_once(SERVICE_PATH . "/customBikeRepository.php");
+require_once(SERVICE_PATH . "/authenticationManager.php");
+require_once(SERVICE_PATH . "/ratingsRepository.php");
 
 class BikesController extends Controller {
     const NumberOfBikesFromSameCategory = 4;
 
     private $customBikes;
+    private $auth;
+    private $ratings;
 
-    function __construct(CustomBikeRepository $customBikes) {
+    function __construct(CustomBikeRepository $customBikes, AuthenticationManager $auth, RatingsRepository $ratings) {
         $this->customBikes = $customBikes;
+        $this->auth = $auth;
+        $this->ratings = $ratings;
     }
 
     public function index() {
@@ -52,9 +58,26 @@ class BikesController extends Controller {
             return new NotFound("Bike with id " . $id . " does not exist.");
         }
 
+        $isUserLoggedIn = $this->auth->isUserLoggedIn();
+
+        if ($this->hasGetValue('rating') && $isUserLoggedIn) {
+            $user = $this->auth->getUser();
+            $rating = $_GET['rating'];
+            $this->ratings->setRatingFor($user->getId(), $id, $rating);
+            $this->redirectTo("/bikes/$id");
+        }
+
         $sameCategory = $this->getSameCategory($bike);
 
-        $model = new DetailViewModel($this->toBikeVm($bike), $this->toBikeVms($sameCategory));
+        $userRating = null;
+        if ($isUserLoggedIn) {
+            $user = $this->auth->getUser();
+            $userRating = $this->ratings->getRatingFor($user->getId(), $id);
+        }
+
+        $avgRating = $this->ratings->getAverageRatingFor($id);
+
+        $model = new DetailViewModel($this->toBikeVm($bike), $this->toBikeVms($sameCategory), $isUserLoggedIn, $avgRating, $userRating);
 
         return new Detail($model);
     }

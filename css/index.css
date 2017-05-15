@@ -23,3 +23,17 @@
 .shop-item {
     display: none;
 }
+
+.rating {
+    padding-left: 0;
+}
+
+.rating li {
+    color: gold;
+    list-style-type: none;
+    display: inline;
+}
+
+.rating-link, .rating-link :hover {
+    color: gold;
+}

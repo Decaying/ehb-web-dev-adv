@@ -20,7 +20,7 @@ class ControllerFactory {
             $controller = new HomeController($this->getBikeRepository());
         } else if ($controllerName === "bikes") {
             require_once("bikesController.php");
-            $controller = new BikesController($this->getBikeRepository());
+            $controller = new BikesController($this->getBikeRepository(), $this->getAuthenticationManager(), $this->getRatingsRepository());
         } else if ($controllerName === "basket") {
             require_once("basketController.php");
             $controller = new BasketController($this->getBikeRepository(), $this->getSessionCartManager());
@@ -68,5 +68,9 @@ class ControllerFactory {
 
     private function getSoldItemsRepository() {
         return $this->factory->getSoldItemsRepository();
+    }
+
+    private function getRatingsRepository() {
+        return $this->factory->getRatingsRepository();
     }
 }
