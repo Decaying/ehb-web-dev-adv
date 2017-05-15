@@ -1,6 +1,6 @@
 <?php
 
 interface LoginTokenRepository {
-    function addSession($user, $keep);
+    function addSession($user);
     function isTokenValid($user, $token);
 }

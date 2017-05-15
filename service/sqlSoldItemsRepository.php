@@ -46,16 +46,17 @@ class SqlSoldItemsRepository implements SoldItemsRepository {
         $street = $this->context->escape_string($dlvAddress->getStreet());
         $zipcode = $this->context->escape_string($dlvAddress->getZipcode());
         $city = $this->context->escape_string($dlvAddress->getCity());
-        return "INSERT INTO Address(street,zipcode,city) VALUES ('" . $street . "','" . $zipcode . "','" . $city . "');";
+        return "INSERT INTO Address(street,zipcode,city) VALUES ('$street','$zipcode','$city');";
     }
 
     private function addSale(User $user, $invMethod, $dlvMethod, $agreedToTerms, $invoiceAddressId, $deliveryAddressId) {
         $invoiceMethod = $this->context->escape_string($invMethod);
         $deliveryMethod = $this->context->escape_string($dlvMethod);
-        return "INSERT INTO Sales(user_id,invoice_address_id,delivery_address_id,invoice_method,delivery_method,agreed_to_terms) VALUES (" . $user->getId() . "," . $invoiceAddressId . "," . $deliveryAddressId . ",'" . $invoiceMethod . "','" . $deliveryMethod . "'," . $agreedToTerms . ");";
+        $user_id = $user->getId();
+        return "INSERT INTO Sales(user_id,invoice_address_id,delivery_address_id,invoice_method,delivery_method,agreed_to_terms) VALUES ($user_id,$invoiceAddressId,$deliveryAddressId,'$invoiceMethod','$deliveryMethod',$agreedToTerms);";
     }
 
     private function addCartItem(CartItem $item, $saleId) {
-        return "INSERT INTO SalesLine(sales_id,bike_id,amount) VALUES (" . $saleId . "," . $item->bikeId . "," . $item->amount . ");";
+        return "INSERT INTO SalesLine(sales_id,bike_id,amount) VALUES ($saleId,$item->bikeId,$item->amount);";
     }
 }

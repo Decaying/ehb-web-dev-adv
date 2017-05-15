@@ -25,7 +25,8 @@ class BrowserLog implements Log {
      * @return void
      */
     function info($message) {
-        echo '<script>console.log(`' . $message . '`);</script>';
+        if ($this->infoEnabled())
+            echo '<script>console.log(`' . $message . '`);</script>';
     }
 
     /**
@@ -33,6 +34,7 @@ class BrowserLog implements Log {
      * @return void
      */
     function error($message) {
-        echo '<script>console.error(`' . $message . '`);</script>';
+        if ($this->errorEnabled())
+            echo '<script>console.error(`' . $message . '`);</script>';
     }
 }

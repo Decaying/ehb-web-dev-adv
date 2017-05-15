@@ -22,12 +22,7 @@ class AuthenticationManager {
         if ($user === "")
             return false;
         
-        $token = $this->getToken();
-
-        if ($token !== "" && $this->sessions->isTokenValid($user, $token)) {
-            return true;
-        }
-        return false;
+        return $this->validateToken($user);
     }
 
     public function getCurrentUser() {
@@ -53,7 +48,7 @@ class AuthenticationManager {
         if ($this->users->userExists($user) && $this->users->validateUserPassword($user, $pass)) {
             $this->setCookieValue(AuthenticationManager::LoggedInUserKey, $user);
 
-            $token = $this->sessions->addSession($user, $keep);
+            $token = $this->sessions->addSession($user);
             $this->setToken($keep, $token);
             return true;
         }
@@ -112,14 +107,15 @@ class AuthenticationManager {
         return null;
     }
 
-    private function getToken() {
-        $cookieToken = $this->getCookieValue(AuthenticationManager::SessionKey);
-        if ($cookieToken !== "")
-            return $cookieToken;
+    private function validateToken($user) {
+        $token = $this->getCookieValue(AuthenticationManager::SessionKey);
+        if (!$token){
+            $token = $this->getSessionValue(AuthenticationManager::SessionKey);
+        }
 
-        $sessionToken = $this->getSessionValue(AuthenticationManager::SessionKey);
-        if ($sessionToken !== "")
-            return $sessionToken;
+        if (!!$token) {
+            return $this->sessions->isTokenValid($user, $token);
+        }
 
         return "";
     }

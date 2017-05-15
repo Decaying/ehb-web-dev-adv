@@ -31,32 +31,32 @@ class SqlCustomBikeRepository implements CustomBikeRepository {
 
     function getLatestBikes() {
         $amount = CustomBikeRepository::NumberOfLatest;
-        $sql = $this->selectBikes() . " ORDER BY date_added DESC LIMIT " . $amount;
+        $sql = $this->selectBikes() . " ORDER BY date_added DESC LIMIT $amount";
         $latestBikes = $this->context->executeOne($sql);
         return $this->asCustomBikes($latestBikes);
     }
 
     function getHighlightedBikes() {
         $amount = CustomBikeRepository::NumberOfHighlights;
-        $sql = $this->selectBikes() . " WHERE is_highlighted = 1 ORDER BY date_added DESC LIMIT " . $amount;
+        $sql = $this->selectBikes() . " WHERE is_highlighted = 1 ORDER BY date_added DESC LIMIT $amount";
         $highlightedBikes = $this->context->executeOne($sql);
         return $this->asCustomBikes($highlightedBikes);
     }
 
     function searchByName($name) {
-        $sql = $this->selectBikes() . " WHERE name LIKE '%" . $name . "%'";
+        $sql = $this->selectBikes() . " WHERE name LIKE '%$name%'";
         $searchResults = $this->context->executeOne($sql);
         return $this->asCustomBikes($searchResults);
     }
 
     function searchByCategory($category) {
-        $sql = $this->selectBikes() . " WHERE category = '" . $category . "'";
+        $sql = $this->selectBikes() . " WHERE category = '$category'";
         $searchResults = $this->context->executeOne($sql);
         return $this->asCustomBikes($searchResults);
     }
 
     function searchById($id) {
-        $sql = $this->selectBikes() . " WHERE id = " . $id;
+        $sql = $this->selectBikes() . " WHERE id = $id";
         $searchResults = $this->context->executeOne($sql);
         return $this->asCustomBike($searchResults);
     }
@@ -102,7 +102,8 @@ class SqlCustomBikeRepository implements CustomBikeRepository {
         if ($fetchResults === null)
             return null;
 
-        $this->log->info("Fetched " . count($fetchResults) . " categories");
+        $numberOfCategories = count($fetchResults);
+        $this->log->info("Fetched $numberOfCategories categories");
 
         foreach ($fetchResults as $category){
             $categories[$category[0]] = $category[0];

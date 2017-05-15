@@ -78,11 +78,11 @@ class SqlContext {
 
     private function checkConnection() {
         if ($this->connection->connect_error)
-            throw new Exception("MySql connection failed: " . $this->connection->connect_error);
+            throw new Exception("MySql connection failed: $this->connection->connect_error");
     }
 
     private function checkQuery() {
         if ($this->connection->error)
-            throw new Exception("MySql query failed: " . $this->connection->error);
+            throw new Exception("MySql query failed: $this->connection->error");
     }
 }

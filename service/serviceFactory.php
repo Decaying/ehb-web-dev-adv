@@ -19,8 +19,10 @@ class ServiceFactory {
     }
 
     public function getLoginTokenRepository() {
-        require_once("inMemoryLoginTokenRepository.php");
-        return new InMemoryLoginTokenRepository();
+        //require_once("inMemoryLoginTokenRepository.php");
+        //return new InMemoryLoginTokenRepository();
+        require_once("sqlLoginTokenRepository.php");
+        return new SqlLoginTokenRepository($this->getSqlContext());
     }
 
     public function getUserRepository() {
