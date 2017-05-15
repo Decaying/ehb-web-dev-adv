@@ -28,8 +28,8 @@ class SqlUserRepository implements UserRepository {
         $email = $this->context->escape_string($user->getEmail());
         $password = $user->getPassword();
         $salt = $user->getSalt();
-        $is_admin = $user->isAdmin() ? "1" : "0";
-        $sql = "INSERT INTO User (firstname, lastname, email, password, salt, is_admin) VALUES ('" . $firstname . "','" . $lastname . "','" . $email . "','" . $password . "','" . $salt . "'," . $is_admin . ")";
+        $is_admin = $user->isAdmin() ? 1 : 0;
+        $sql = "INSERT INTO User (firstname, lastname, email, password, salt, is_admin) VALUES ('$firstname','$lastname','$email','$password','$salt',$is_admin)";
         $this->context->executeOne($sql);
     }
 
@@ -43,11 +43,19 @@ class SqlUserRepository implements UserRepository {
      * @return User
      */
     function getUser($user) {
-        $sql = "SELECT id, firstname, lastname, email, password, salt, is_admin FROM User WHERE email = '" . $user . "'";
+        $email = $this->context->escape_string($user);
+        $sql = "SELECT id, firstname, lastname, email, password, salt, is_admin FROM User WHERE email = '$email'";
         $result = $this->context->executeOne($sql);
         if ($result){
             $row = $result->fetch_row();
-            return new User($row[1], $row[2], $row[3], $row[4], $row[6], $row[0], $row[5]);
+            $id = $row[0];
+            $firstname = $row[1];
+            $lastname = $row[2];
+            $email = $row[3];
+            $password = $row[4];
+            $salt = $row[5];
+            $isAdmin = $row[6] == 1 ? true : false;
+            return new User($firstname, $lastname, $email, $password, $isAdmin, $id, $salt);
         }
         return null;
     }
