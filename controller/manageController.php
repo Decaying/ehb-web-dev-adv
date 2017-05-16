@@ -7,6 +7,7 @@ use manage\Index;
 
 require_once("controller.php");
 require_once(VIEW_PATH . "/notFound.php");
+require_once(VIEW_PATH . "/notAuthorized.php");
 require_once(VIEW_PATH . "/manage/index.php");
 require_once(VIEW_PATH . "/manage/create.php");
 require_once(VIEW_PATH . "/manage/edit.php");
@@ -16,12 +17,18 @@ require_once(SERVICE_PATH . "/customBikeRepository.php");
 class ManageController extends Controller {
 
     private $customBikes;
+    private $auth;
 
-    function __construct(CustomBikeRepository $customBikes) {
+    function __construct(CustomBikeRepository $customBikes, AuthenticationManager $auth) {
         $this->customBikes = $customBikes;
+        $this->auth = $auth;
     }
 
     public function index() {
+        if (!$this->auth->userIsAdmin()) {
+            return new NotAuthorized();
+        }
+
         $allBikes = $this->customBikes->getAllBikes();
 
         $vms = CustomBikeViewModel::FromCustomBikes($allBikes);
@@ -30,7 +37,11 @@ class ManageController extends Controller {
     }
 
     public function create() {
-        if ($this->hasPostValue('form-id') && $_POST['form-id'] === 'create-bike'){
+        if (!$this->auth->userIsAdmin()) {
+            return new NotAuthorized();
+        }
+
+        if ($this->hasPostValue('form-id') && $_POST['form-id'] === 'create-bike') {
             $this->createNewBike();
             $this->redirectTo('/manage');
         } else {
@@ -39,7 +50,11 @@ class ManageController extends Controller {
     }
 
     public function delete($id) {
-        if ($this->hasPostValue('form-id') && $_POST['form-id'] === 'confirm-delete'){
+        if (!$this->auth->userIsAdmin()) {
+            return new NotAuthorized();
+        }
+
+        if ($this->hasPostValue('form-id') && $_POST['form-id'] === 'confirm-delete') {
             $this->customBikes->delete($id);
             $this->redirectTo('/manage');
         } else {
@@ -48,7 +63,11 @@ class ManageController extends Controller {
     }
 
     public function edit($id) {
-        if ($this->hasPostValue('form-id') && $_POST['form-id'] === "edit-bike"){
+        if (!$this->auth->userIsAdmin()) {
+            return new NotAuthorized();
+        }
+
+        if ($this->hasPostValue('form-id') && $_POST['form-id'] === "edit-bike") {
             $this->editExistingBike($id);
             $this->redirectTo('/manage');
         } else {

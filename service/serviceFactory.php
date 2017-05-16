@@ -4,8 +4,6 @@ class ServiceFactory {
     public function getCustomBikeRepository() {
         require_once("sqlCustomBikeRepository.php");
         return new SqlCustomBikeRepository($this->getSqlContext(), $this->getLog());
-        //require_once("inMemoryCustomBikeRepository.php");
-        //return new InMemoryCustomBikeRepository();
     }
 
     public function getSessionCartManager() {
@@ -19,16 +17,11 @@ class ServiceFactory {
     }
 
     public function getLoginTokenRepository() {
-        //require_once("inMemoryLoginTokenRepository.php");
-        //return new InMemoryLoginTokenRepository();
         require_once("sqlLoginTokenRepository.php");
         return new SqlLoginTokenRepository($this->getSqlContext());
     }
 
     public function getUserRepository() {
-        //require_once("inMemoryUserRepository.php");
-        //return new InMemoryUserRepository();
-
         require_once("sqlUserRepository.php");
         return new SqlUserRepository($this->getSqlContext());
     }
@@ -38,9 +31,9 @@ class ServiceFactory {
         return new Mailer();
     }
 
-    public function getSoldItemsRepository() {
-        require_once("sqlSoldItemsRepository.php");
-        return new SqlSoldItemsRepository($this->getSqlContext());
+    public function getOrderRepository() {
+        require_once("sqlOrderRepository.php");
+        return new SqlOrderRepository($this->getSqlContext());
     }
 
     public function getSqlContext() {

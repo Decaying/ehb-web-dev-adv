@@ -29,13 +29,13 @@ class ControllerFactory {
             $controller = new LoginController($this->getAuthenticationManager());
         } else if ($controllerName === "cart") {
             require_once("cartController.php");
-            $controller = new CartController($this->getBikeRepository(), $this->getSessionCartManager(), $this->getAuthenticationManager(), $this->getSoldItemsRepository());
+            $controller = new CartController($this->getBikeRepository(), $this->getSessionCartManager(), $this->getAuthenticationManager(), $this->getOrderRepository());
         } else if ($controllerName === "contact") {
             require_once("contactController.php");
             $controller = new ContactController($this->getAuthenticationManager(), $this->getMailer());
         } else if ($controllerName === "manage") {
             require_once("manageController.php");
-            $controller = new ManageController($this->getBikeRepository());
+            $controller = new ManageController($this->getBikeRepository(), $this->getAuthenticationManager());
         } else if ($controllerName !== "") {
             $controllerClassname = ucfirst($controllerName . "Controller");
             $controllerFilename = lcfirst($controllerClassname) . ".php";
@@ -66,8 +66,8 @@ class ControllerFactory {
         return $this->factory->getMailer();
     }
 
-    private function getSoldItemsRepository() {
-        return $this->factory->getSoldItemsRepository();
+    private function getOrderRepository() {
+        return $this->factory->getOrderRepository();
     }
 
     private function getRatingsRepository() {

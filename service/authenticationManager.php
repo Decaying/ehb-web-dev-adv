@@ -127,4 +127,13 @@ class AuthenticationManager {
             $this->setSessionValue(AuthenticationManager::SessionKey, $token);
         }
     }
+
+    public function userIsAdmin() {
+        if ($this->isUserLoggedIn())
+            $user = $this->users->getUser($this->getCurrentUser());
+        if (isset($user) && $user !== null)
+            return $user->isAdmin();
+
+        return false;
+    }
 }

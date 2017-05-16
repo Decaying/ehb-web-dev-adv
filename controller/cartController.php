@@ -22,20 +22,20 @@ require_once(MODEL_PATH . "/customBikeViewModel.php");
 require_once(MODEL_PATH . "/cart/checkoutCompleteViewModel.php");
 require_once(SERVICE_PATH . "/model/cartItem.php");
 require_once(SERVICE_PATH . "/sessionCartManager.php");
-require_once(SERVICE_PATH . "/soldItemsRepository.php");
+require_once(SERVICE_PATH . "/orderRepository.php");
 
 class CartController extends Controller {
 
     private $customBikes;
     private $cart;
     private $auth;
-    private $soldItems;
+    private $orders;
 
-    function __construct(CustomBikeRepository $bikes, SessionCartManager $cart, AuthenticationManager $auth, SoldItemsRepository $soldItems) {
+    function __construct(CustomBikeRepository $bikes, SessionCartManager $cart, AuthenticationManager $auth, OrderRepository $orders) {
         $this->customBikes = $bikes;
         $this->cart = $cart;
         $this->auth = $auth;
-        $this->soldItems = $soldItems;
+        $this->orders = $orders;
     }
 
     public function index() {
@@ -114,7 +114,7 @@ class CartController extends Controller {
         $invMethod = $_POST['invMethod'];
         $dlvMethod = $_POST['dlvMethod'];
 
-        $this->soldItems->add($user, $itemsInCart, $invAddress, $dlvAddress, $invMethod, $dlvMethod, $agreedToTerms);
+        $this->orders->add($user, $itemsInCart, $invAddress, $dlvAddress, $invMethod, $dlvMethod, $agreedToTerms);
 
         return new CheckoutCompleteViewModel($bikes, $dlvAddressVm, $invAddressVm, $agreedToTerms, $invMethod, $dlvMethod);
     }
