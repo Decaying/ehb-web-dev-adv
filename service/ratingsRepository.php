@@ -9,12 +9,13 @@ interface RatingsRepository {
     function getRatingFor($userId, $bikeId);
 
     /**
-     * @param $userId
-     * @param $bikeId
-     * @param $rating
+     * @param $userId int
+     * @param $bikeId int
+     * @param $rating int
+     * @param $comment string
      * @return void
      */
-    function setRatingFor($userId, $bikeId, $rating);
+    function setRatingFor($userId, $bikeId, $rating, $comment);
 
     function getAverageRatingFor($bikeId);
 }

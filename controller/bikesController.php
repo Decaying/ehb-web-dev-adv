@@ -4,11 +4,13 @@ use bikes\Detail;
 use bikes\DetailViewModel;
 use bikes\Index;
 use bikes\IndexViewModel;
+use bikes\RatingComment;
 
 require_once("controller.php");
 
 require_once(VIEW_PATH . "/bikes/detail.php");
 require_once(VIEW_PATH . "/bikes/index.php");
+require_once(VIEW_PATH . "/bikes/ratingComment.php");
 require_once(VIEW_PATH . "/notFound.php");
 require_once(MODEL_PATH . "/customBikeViewModel.php");
 require_once(MODEL_PATH . "/bikes/indexViewModel.php");
@@ -55,16 +57,22 @@ class BikesController extends Controller {
         $bike = $this->getById($id);
 
         if (!$bike) {
-            return new NotFound("Bike with id " . $id . " does not exist.");
+            return new NotFound("Bike with id '$id' does not exist.");
         }
 
         $isUserLoggedIn = $this->auth->isUserLoggedIn();
 
         if ($this->hasGetValue('rating') && $isUserLoggedIn) {
-            $user = $this->auth->getUser();
             $rating = $_GET['rating'];
-            $this->ratings->setRatingFor($user->getId(), $id, $rating);
-            $this->redirectTo("/bikes/$id");
+            if ($this->hasPostValue('form-id') && $_POST['form-id'] === 'rating-comment') {
+                $comment = $_POST['comment'];
+
+                $user = $this->auth->getUser();
+                $this->ratings->setRatingFor($user->getId(), $id, $rating, $comment);
+                $this->redirectTo("/bikes/$id");
+            } else {
+                return new RatingComment($rating);
+            }
         }
 
         $sameCategory = $this->getSameCategory($bike);

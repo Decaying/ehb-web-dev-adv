@@ -45,7 +45,7 @@ echo '
             <label for="pass">Stay logged in? </label>
         </div>
     </div>
-    <input id="submit" type="submit" value="Login">
+    <input id="submit" type="submit" class="btn btn-success" value="Login">
 </form>
         ';
     }

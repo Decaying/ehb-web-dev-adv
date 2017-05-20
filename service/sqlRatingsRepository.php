@@ -22,8 +22,9 @@ class SqlRatingsRepository implements RatingsRepository {
         return 0;
     }
 
-    function setRatingFor($userId, $bikeId, $rating) {
-        $this->context->executeOne("INSERT INTO BikeRatings (bike_id, user_id, rating) VALUES ('$bikeId', '$userId', '$rating')");
+    function setRatingFor($userId, $bikeId, $rating, $comment) {
+        $ratingComment = $this->context->escape_string($comment);
+        $this->context->executeOne("INSERT INTO BikeRatings (bike_id, user_id, rating, comment) VALUES ('$bikeId', '$userId', '$rating', '$ratingComment')");
     }
 
     function getAverageRatingFor($bikeId) {
