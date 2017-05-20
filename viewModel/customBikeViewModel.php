@@ -24,7 +24,7 @@ class CustomBikeViewModel {
     }
 
     public function getPrice() {
-        return number_format($this->price, 2);
+        return number_format($this->price, 2, '.', '');
     }
 
     public static function FromCustomBikes(array $bikes) {
