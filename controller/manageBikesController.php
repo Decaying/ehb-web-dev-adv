@@ -1,20 +1,20 @@
 <?php
 
-use manage\Create;
-use manage\Delete;
-use manage\Edit;
-use manage\Index;
+use manage\bikes\Create;
+use manage\bikes\Delete;
+use manage\bikes\Edit;
+use manage\bikes\Index;
 
 require_once("controller.php");
 require_once(VIEW_PATH . "/notFound.php");
 require_once(VIEW_PATH . "/notAuthorized.php");
-require_once(VIEW_PATH . "/manage/index.php");
-require_once(VIEW_PATH . "/manage/create.php");
-require_once(VIEW_PATH . "/manage/edit.php");
-require_once(VIEW_PATH . "/manage/delete.php");
+require_once(VIEW_PATH . "/manage/bikes/index.php");
+require_once(VIEW_PATH . "/manage/bikes/create.php");
+require_once(VIEW_PATH . "/manage/bikes/edit.php");
+require_once(VIEW_PATH . "/manage/bikes/delete.php");
 require_once(SERVICE_PATH . "/customBikeRepository.php");
 
-class ManageController extends Controller {
+class ManageBikesController extends Controller {
 
     private $customBikes;
     private $auth;
@@ -107,4 +107,7 @@ class ManageController extends Controller {
         $this->customBikes->update($bike);
     }
 
+    public function orders() {
+        return new OrderOverview();
+    }
 }

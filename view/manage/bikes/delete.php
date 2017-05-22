@@ -1,6 +1,6 @@
 <?php
 
-namespace manage;
+namespace manage\bikes;
 
 use View;
 

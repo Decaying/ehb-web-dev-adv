@@ -33,9 +33,12 @@ class ControllerFactory {
         } else if ($controllerName === "contact") {
             require_once("contactController.php");
             $controller = new ContactController($this->getAuthenticationManager(), $this->getMailer());
-        } else if ($controllerName === "manage") {
-            require_once("manageController.php");
-            $controller = new ManageController($this->getBikeRepository(), $this->getAuthenticationManager());
+        } else if ($controllerName === "manage-bikes") {
+            require_once("manageBikesController.php");
+            $controller = new ManageBikesController($this->getBikeRepository(), $this->getAuthenticationManager());
+        } else if ($controllerName === "manage-orders") {
+            require_once("manageOrdersController.php");
+            $controller = new ManageOrdersController($this->getBikeRepository(), $this->getAuthenticationManager());
         } else if ($controllerName !== "") {
             $controllerClassname = ucfirst($controllerName . "Controller");
             $controllerFilename = lcfirst($controllerClassname) . ".php";

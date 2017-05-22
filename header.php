@@ -100,7 +100,15 @@
 
                         $user = $auth->getUser();
                         if ($user !== null && $user->isAdmin()){
-                            navLink('Admin', 'manage');
+                            echo "
+                            <li class='dropdown'>
+                                <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Admin
+                                <span class='caret'></span></a>
+                                <ul class='dropdown-menu'>";
+                                    navLink('Bikes', 'manage-bikes');
+                                    navLink('Orders', 'manage-orders');
+                            echo "</ul>
+                            </li>";
                         }
                     } else {
                         navLink('Login', 'login');

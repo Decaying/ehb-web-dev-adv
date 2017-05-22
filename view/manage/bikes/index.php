@@ -1,6 +1,6 @@
 <?php
 
-namespace manage;
+namespace manage\bikes;
 
 require_once(VIEW_PATH . "/view.php");
 require_once(MODEL_PATH . "/customBikeViewModel.php");
