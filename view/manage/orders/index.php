@@ -49,7 +49,7 @@ class Index implements View {
         echo "
 <div class='panel panel-success'>
     <div class='panel-heading'>
-        <h4><a href='$root/manage-orders/details/$id'>$firstname $lastname</a></h4>
+        <h4><a href='$root/manage-orders/detail/$id'>$firstname $lastname</a></h4>
     </div>
     <div class='panel-body'>
         <p>To be delivered using <strong>$dlvMethod</strong> to:</p>
@@ -57,7 +57,6 @@ class Index implements View {
         <p>Paid with <strong>$invMethod</strong>. Send the invoice to:<p>
         <div class='address'><p>$invStreet <br> $invZip $invCity </p></div>
     </div>
-</div>
-";
+</div>";
     }
 }

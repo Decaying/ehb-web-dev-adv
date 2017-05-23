@@ -3,6 +3,8 @@
 require_once("orderRepository.php");
 require_once("model/cartItem.php");
 require_once("sqlContext.php");
+require_once("model/order.php");
+require_once("model/orderLine.php");
 
 class SqlOrderRepository implements OrderRepository {
 
@@ -65,7 +67,61 @@ class SqlOrderRepository implements OrderRepository {
     public function get() {
         $orders = array();
 
-        $sql = "SELECT sales.id, 
+        $sql = $this->getOrders();
+
+        $result = $this->context->executeOne($sql);
+
+        $this->logger->info("fetched results");
+
+        while ($row = $result->fetch_array(MYSQLI_NUM)) {
+            $this->logger->info("parsing row");
+            $order = $this->mapToOrder($row);
+            $orders[] = $order;
+        }
+
+        return $orders;
+    }
+
+    public function getById($id) {
+        $escapedId = $this->context->escape_string($id);
+
+        $sql = $this->getOrders() . " WHERE sales.id = $escapedId";
+        $result = $this->context->executeOne($sql);
+
+        if (!$result)
+            return null;
+
+        $row = $result->fetch_row();
+        $order = $this->mapToOrder($row);
+
+        $sql = "SELECT salesLine.amount, bike.id, bike.name 
+                FROM SalesLine salesLine
+                INNER JOIN Bikes bike ON bike.id = salesLine.bike_id
+                WHERE salesLine.sales_id = $id";
+        $result = $this->context->executeOne($sql);
+
+        $orderLines = array();
+
+        while ($row = $result->fetch_array(MYSQLI_NUM)) {
+            $this->logger->info("parsing row");
+
+            $amount = floatval($row[0]);
+            $bikeId = (int)$row[1];
+            $bikeName = $row[2];
+
+            $orderLines[] = new OrderLine($bikeId, $bikeName, $amount);
+        }
+
+        $order->setOrderLines($orderLines);
+
+        return $order;
+    }
+
+    /**
+     * @return string
+     */
+    private function getOrders() {
+        return "SELECT sales.id, 
                   user.firstname, user.lastname,
                   sales.delivery_method, sales.invoice_method,
                   delivery_address.street, delivery_address.zipcode, delivery_address.city, 
@@ -74,23 +130,21 @@ class SqlOrderRepository implements OrderRepository {
                 INNER JOIN User user ON user.id = sales.user_id
                 INNER JOIN Address delivery_address ON delivery_address.id = sales.delivery_address_id
                 INNER JOIN Address invoice_address ON invoice_address.id = sales.invoice_address_id";
+    }
 
-        $result = $this->context->executeOne($sql);
-
-        $this->logger->info("fetched results");
-
-        while ($row = $result->fetch_array(MYSQLI_NUM)) {
-            $this->logger->info("parsing row");
-            $id = $row[0];
-            $userFirstname = $row[1];
-            $userLastname = $row[2];
-            $dlvMethod = $row[3];
-            $invMethod = $row[4];
-            $dlvAddress = new Address($row[5], $row[6], $row[7]);
-            $invAddress = new Address($row[8], $row[9], $row[10]);
-            $orders[] = new Order($id, $userFirstname, $userLastname, $dlvMethod, $invMethod, $dlvAddress, $invAddress);
-        }
-
-        return $orders;
+    /**
+     * @param $row
+     * @return Order
+     */
+    private function mapToOrder($row) {
+        $id = $row[0];
+        $userFirstname = $row[1];
+        $userLastname = $row[2];
+        $dlvMethod = $row[3];
+        $invMethod = $row[4];
+        $dlvAddress = new Address($row[5], $row[6], $row[7]);
+        $invAddress = new Address($row[8], $row[9], $row[10]);
+        $order = new Order($id, $userFirstname, $userLastname, $dlvMethod, $invMethod, $dlvAddress, $invAddress);
+        return $order;
     }
 }

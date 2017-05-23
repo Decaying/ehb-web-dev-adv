@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: HansB
- * Date: 22/05/2017
- * Time: 21:18
- */
 class Order {
     private $userFirstname;
     private $userLastname;
@@ -14,6 +8,7 @@ class Order {
     private $dlv;
     private $inv;
     private $id;
+    private $orderLines;
 
     function __construct($id, $userFirstname, $userLastname, $dlvMethod, $invMethod, Address $dlv, Address $inv) {
         $this->userFirstname = $userFirstname;
@@ -72,5 +67,19 @@ class Order {
      */
     public function getInvoiceAddress() {
         return $this->inv;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOrderLines() {
+        return $this->orderLines;
+    }
+
+    /**
+     * @param void $orderLines
+     */
+    public function setOrderLines(array $orderLines) {
+        $this->orderLines = $orderLines;
     }
 }
