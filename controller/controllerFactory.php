@@ -38,7 +38,7 @@ class ControllerFactory {
             $controller = new ManageBikesController($this->getBikeRepository(), $this->getAuthenticationManager());
         } else if ($controllerName === "manage-orders") {
             require_once("manageOrdersController.php");
-            $controller = new ManageOrdersController($this->getBikeRepository(), $this->getAuthenticationManager());
+            $controller = new ManageOrdersController($this->getOrderRepository(), $this->getAuthenticationManager());
         } else if ($controllerName !== "") {
             $controllerClassname = ucfirst($controllerName . "Controller");
             $controllerFilename = lcfirst($controllerClassname) . ".php";

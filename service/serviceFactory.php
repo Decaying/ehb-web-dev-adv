@@ -33,7 +33,7 @@ class ServiceFactory {
 
     public function getOrderRepository() {
         require_once("sqlOrderRepository.php");
-        return new SqlOrderRepository($this->getSqlContext());
+        return new SqlOrderRepository($this->getSqlContext(), $this->getLog());
     }
 
     public function getSqlContext() {

@@ -37,3 +37,7 @@
 .rating-link, .rating-link :hover {
     color: gold;
 }
+
+.address {
+    margin-left: 2em;
+}

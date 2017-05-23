@@ -7,9 +7,11 @@ require_once("sqlContext.php");
 class SqlOrderRepository implements OrderRepository {
 
     private $context;
+    private $logger;
 
-    function __construct(SqlContext $context) {
+    function __construct(SqlContext $context, Log $logger) {
         $this->context = $context;
+        $this->logger = $logger;
     }
 
     public function add(User $user, array $itemsInCart, Address $invAddress, Address $dlvAddress, $invMethod, $dlvMethod, $agreedToTerms) {
@@ -58,5 +60,37 @@ class SqlOrderRepository implements OrderRepository {
 
     private function addCartItem(CartItem $item, $saleId) {
         return "INSERT INTO SalesLine(sales_id,bike_id,amount) VALUES ($saleId,$item->bikeId,$item->amount);";
+    }
+
+    public function get() {
+        $orders = array();
+
+        $sql = "SELECT sales.id, 
+                  user.firstname, user.lastname,
+                  sales.delivery_method, sales.invoice_method,
+                  delivery_address.street, delivery_address.zipcode, delivery_address.city, 
+                  invoice_address.street, invoice_address.zipcode, invoice_address.city 
+                FROM Sales sales
+                INNER JOIN User user ON user.id = sales.user_id
+                INNER JOIN Address delivery_address ON delivery_address.id = sales.delivery_address_id
+                INNER JOIN Address invoice_address ON invoice_address.id = sales.invoice_address_id";
+
+        $result = $this->context->executeOne($sql);
+
+        $this->logger->info("fetched results");
+
+        while ($row = $result->fetch_array(MYSQLI_NUM)) {
+            $this->logger->info("parsing row");
+            $id = $row[0];
+            $userFirstname = $row[1];
+            $userLastname = $row[2];
+            $dlvMethod = $row[3];
+            $invMethod = $row[4];
+            $dlvAddress = new Address($row[5], $row[6], $row[7]);
+            $invAddress = new Address($row[8], $row[9], $row[10]);
+            $orders[] = new Order($id, $userFirstname, $userLastname, $dlvMethod, $invMethod, $dlvAddress, $invAddress);
+        }
+
+        return $orders;
     }
 }
