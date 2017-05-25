@@ -61,7 +61,22 @@ class SqlOrderRepository implements OrderRepository {
     }
 
     private function addCartItem(CartItem $item, $saleId) {
-        return "INSERT INTO SalesLine(sales_id,bike_id,amount) VALUES ($saleId,$item->bikeId,$item->amount);";
+        $price = $this->getBikePrice($item->bikeId);
+
+        return "INSERT INTO SalesLine(sales_id,bike_id,amount, pricePerUnit) VALUES ($saleId,$item->bikeId,$item->amount, $price);";
+    }
+
+    private function getBikePrice($bikeId) {
+        $escapedId = $this->context->escape_string($bikeId);
+
+        $sql = "SELECT price FROM Bikes WHERE id = $escapedId";
+        $result = $this->context->executeOne($sql);
+
+        if (!$result)
+            throw new Exception("Bike not found");
+
+        $row = $result->fetch_row();
+        return $row[0];
     }
 
     public function get() {
@@ -94,7 +109,7 @@ class SqlOrderRepository implements OrderRepository {
         $row = $result->fetch_row();
         $order = $this->mapToOrder($row);
 
-        $sql = "SELECT salesLine.amount, bike.id, bike.name 
+        $sql = "SELECT salesLine.amount, salesLine.pricePerUnit, bike.id, bike.name
                 FROM SalesLine salesLine
                 INNER JOIN Bikes bike ON bike.id = salesLine.bike_id
                 WHERE salesLine.sales_id = $id";
@@ -105,11 +120,12 @@ class SqlOrderRepository implements OrderRepository {
         while ($row = $result->fetch_array(MYSQLI_NUM)) {
             $this->logger->info("parsing row");
 
-            $amount = floatval($row[0]);
-            $bikeId = (int)$row[1];
-            $bikeName = $row[2];
+            $amount = (int)$row[0];
+            $unitPrice = floatval($row[1]);
+            $bikeId = (int)$row[2];
+            $bikeName = $row[3];
 
-            $orderLines[] = new OrderLine($bikeId, $bikeName, $amount);
+            $orderLines[] = new OrderLine($bikeId, $bikeName, $amount, $unitPrice);
         }
 
         $order->setOrderLines($orderLines);

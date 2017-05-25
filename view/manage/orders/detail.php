@@ -69,8 +69,9 @@ class Detail implements View {
         $root = SITE_ROOT;
         $bikeId = $orderLine->getBikeId();
         $bikeName = $orderLine->getBikeName();
-        $amount = $orderLine->getAmountWithCurrency();
+        $price = $orderLine->getPriceWithCurrency();
+        $amount = $orderLine->getAmount();
 
-        echo "<li><a href='$root/bikes/$bikeId'>$bikeName</a> at $amount</li>";
+        echo "<li>$amount x <a href='$root/bikes/$bikeId'>$bikeName</a> at $price</li>";
     }
 }

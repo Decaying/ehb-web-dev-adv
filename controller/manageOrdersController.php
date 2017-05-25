@@ -115,6 +115,6 @@ class ManageOrdersController extends Controller {
      * @return OrderLineViewModel
      */
     private function toOrderLineViewModel(OrderLine $orderLine) {
-        return new OrderLineViewModel($orderLine->getBikeId(), $orderLine->getBikeName(), $orderLine->getAmount());
+        return new OrderLineViewModel($orderLine->getBikeId(), $orderLine->getBikeName(), $orderLine->getAmount(), $orderLine->getUnitPrice());
     }
 }

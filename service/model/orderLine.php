@@ -4,11 +4,13 @@ class OrderLine {
     private $bikeId;
     private $bikeName;
     private $amount;
+    private $unitPrice;
 
-    function __construct($bikeId, $bikeName, $amount) {
+    function __construct($bikeId, $bikeName, $amount, $unitPrice) {
         $this->bikeId = $bikeId;
         $this->bikeName = $bikeName;
         $this->amount = $amount;
+        $this->unitPrice = $unitPrice;
     }
 
     /**
@@ -26,9 +28,16 @@ class OrderLine {
     }
 
     /**
-     * @return float
+     * @return int
      */
     public function getAmount() {
         return $this->amount;
+    }
+
+    /**
+     * @return float
+     */
+    public function getUnitPrice() {
+        return $this->unitPrice;
     }
 }

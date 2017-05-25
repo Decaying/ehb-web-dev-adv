@@ -20,7 +20,7 @@ class Index implements View {
         $root = SITE_ROOT;
         echo '<h3>Manage your bikes</h3>';
 
-        echo "<a href='$root/manage/create' class='btn btn-success new-bike'><span class='glyphicon glyphicon-plus'></span> Create</a>";
+        echo "<a href='$root/manage-bikes/create' class='btn btn-success new-bike'><span class='glyphicon glyphicon-plus'></span> Create</a>";
 
         echo "<div class='container' style='margin-top: 10px;'>";
         foreach ($this->bikes as $key => $bike){
@@ -51,8 +51,8 @@ class Index implements View {
             <p>Price: $price</p>
             <p>Display in highlights: $highlight_text</p>
             <div class='pull-right'>
-                <a href='$root/manage/edit/$bike->id' class='btn btn-primary'><span class='glyphicon glyphicon-cog'></span> Edit</a>
-                <a href='$root/manage/delete/$bike->id' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span> Delete</a>
+                <a href='$root/manage-bikes/edit/$bike->id' class='btn btn-primary'><span class='glyphicon glyphicon-cog'></span> Edit</a>
+                <a href='$root/manage-bikes/delete/$bike->id' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span> Delete</a>
             </div>
         </div>
     </div>
